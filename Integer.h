@@ -32,7 +32,22 @@
  */
 template <typename II, typename FI>
 FI shift_left_digits (II b, II e, int n, FI x) {
-    // <your code>
+                                                            //n is the number of times you shift?
+
+    assert(n >= 0);                                         //n must be greater than or equal to 0, cant shift by negative value
+
+    while( n > 0){                                          //fill front run with 0s
+        *x = 0;                                             //then pick up where x left off 
+        ++x;                                                //in the next while loop below
+        --n;
+    }
+
+    while(b != e){                                          //while the beginning != end        
+        *x = *b;                                            //the place at x in FI is now the value at II b
+        ++x;                                                //move the FI and II forward until its finished transferred
+        ++b;
+    }
+
     return x;}
 
 // ------------------
@@ -50,7 +65,20 @@ FI shift_left_digits (II b, II e, int n, FI x) {
  */
 template <typename II, typename FI>
 FI shift_right_digits (II b, II e, int n, FI x) {
-    // <your code>
+
+    assert( n >= 0);
+
+    while(n > 0){
+        ++b;                                                //increment b to the place to the rightside
+        --n;                                                //so we can fill with 0 and then copy over    
+    }
+
+    while( b != e){
+        *x = *b;
+        ++b;
+        ++x;
+    }
+
     return x;}
 
 // -----------
@@ -332,14 +360,14 @@ class Integer {
         // ------------
 
         /**
-         * <your documentation>
+         * creates a Integer object initiated with value 
          */
         Integer (int value) {
             // <your code>
             assert(valid());}
 
         /**
-         * <your documentation>
+         * checks to see if value is anything other than and int
          * @throws invalid_argument if value is not a valid representation of an Integer
          */
         explicit Integer (const std::string& value) {
@@ -368,14 +396,14 @@ class Integer {
         // -----------
 
         /**
-         * <your documentation>
+         * post-increment of the object that is passed by the function
          */
         Integer& operator ++ () {
             *this += 1;
             return *this;}
 
         /**
-         * <your documentation>
+         * pre-increment of the object that is passed by the function
          */
         Integer operator ++ (int) {
             Integer x = *this;
@@ -387,14 +415,14 @@ class Integer {
         // -----------
 
         /**
-         * <your documentation>
+         * post-decrement of the object that is passed by the function
          */
         Integer& operator -- () {
             *this -= 1;
             return *this;}
 
         /**
-         * <your documentation>
+         * pre-decrement of the object that is passed by the function
          */
         Integer operator -- (int) {
             Integer x = *this;
@@ -406,10 +434,12 @@ class Integer {
         // -----------
 
         /**
-         * <your documentation>
+         * adds the rhs value to this
          */
         Integer& operator += (const Integer& rhs) {
-            // <your code>
+
+            *this = *this + rhs._x;
+
             return *this;}
 
         // -----------
@@ -417,10 +447,12 @@ class Integer {
         // -----------
 
         /**
-         * <your documentation>
+         * subtract rhs from the value
          */
         Integer& operator -= (const Integer& rhs) {
-            // <your code>
+
+            *this = *this - rhs._x;
+
             return *this;}
 
         // -----------
@@ -428,10 +460,12 @@ class Integer {
         // -----------
 
         /**
-         * <your documentation>
+         * multiply the value by the ths
          */
         Integer& operator *= (const Integer& rhs) {
-            // <your code>
+
+            *this = *this * rhs._x;
+
             return *this;}
 
         // -----------
@@ -443,7 +477,13 @@ class Integer {
          * @throws invalid_argument if (rhs == 0)
          */
         Integer& operator /= (const Integer& rhs) {
-            // <your code>
+
+            if(rhs == 0){
+                throw std::invalid_argument("Cannot divide by zero.");
+            }
+
+            *this = *this / rhs._x;
+
             return *this;}
 
         // -----------
@@ -451,11 +491,17 @@ class Integer {
         // -----------
 
         /**
-         * <your documentation>
+         * takes the value this and modulo's and set its equal to thsi
          * @throws invalid_argument if (rhs <= 0)
          */
         Integer& operator %= (const Integer& rhs) {
-            // <your code>
+            
+            if(rhs <= 0){
+                throw std::invalid_argument("Value of rhs is <= 0.");
+            }
+
+            *this = *this % rhs._x;
+
             return *this;}
 
         // ------------
@@ -463,10 +509,14 @@ class Integer {
         // ------------
 
         /**
-         * <your documentation>
+         * shifts the value this to the left n times
          */
         Integer& operator <<= (int n) {
-            // <your code>
+
+            for(int i = 0; i < n; ++i){
+                *this = *this << 1;
+            }
+
             return *this;}
 
         // ------------
@@ -474,10 +524,14 @@ class Integer {
         // ------------
 
         /**
-         * <your documentation>
+         *  shifts the value this to the right n times
          */
         Integer& operator >>= (int n) {
-            // <your code>
+
+            for(int i = 0; i < n; ++i){
+                *this = *this >> 1;
+            }
+
             return *this;}
 
         // ---
@@ -486,11 +540,21 @@ class Integer {
 
         /**
          * absolute value
-         * <your documentation>
+         * Takes the absolute value of this
          */
         Integer& abs () {
-            // <your code>
-            return *this;}
+
+            if(*this > 0){
+                return *this;
+            }
+            else if(*this < 0){
+                *this = *this * -1;
+
+                return *this;
+            }
+
+            return *this;
+        }
 
         // ---
         // pow
@@ -498,11 +562,21 @@ class Integer {
 
         /**
          * power
-         * <your documentation>
+         * this takes in a value e to be the power and takes the value to that power.
          * @throws invalid_argument if ((this == 0) && (e == 0)) or (e < 0)
          */
         Integer& pow (int e) {
-            // <your code>
+
+            if(*this == 0 && e == 0){
+                throw std::invalid_argument("Received 0 values.");
+            }
+
+            if(e < 0){
+                throw std::invalid_argument("Received e < 0");
+            }
+
+            //the code should be more complex to handle bigger values of e
+
             return *this;}};
 
 #endif // Integer_h
