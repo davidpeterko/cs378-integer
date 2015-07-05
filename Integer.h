@@ -176,14 +176,14 @@ class Integer {
      */
     friend bool operator == (const Integer& lhs, const Integer& rhs) {
 
-        int rhs_size = rhs._x.size();
-        int lhs_size = lhs._x.size();
+        int rsize = rhs._x.size();
+        int lsize = lhs._x.size();
 
-        assert(rhs_size != 0);
-        assert(lhs_size != 0);
+        assert(rsize != 0);
+        assert(lsize != 0);
 
         //check container sizes
-        if(rhs_size != lhs_size){
+        if(rsize != lsize){
             //lhs size not equal to rhs size
             return false;
         }
@@ -191,14 +191,14 @@ class Integer {
         //check for negative value
         if(lhs.sign != rhs.sign){
             //signs not equal
-            return false
+            return false;
         }
 
         //check values
 
         //iterators
-        auto C::const_iterator it_lhs = lhs._x.begin();
-        auto C::const_iterator it_rhs = rhs._x.begin();
+        typename C::const_iterator it_lhs = lhs._x.begin();
+        typename C::const_iterator it_rhs = rhs._x.begin();
 
         //use cbegin and cend for const iterators
         while(it_lhs != lhs._x.cend() && it_rhs != rhs._x.cend()){
@@ -239,8 +239,8 @@ class Integer {
         int rsize = rhs._x.size();
         int lsize = lhs._x.size();
 
-        assert(rhs_size != 0);
-        assert(lhs_size != 0);
+        assert(rsize != 0);
+        assert(lsize != 0);
 
         //check for negative value
         bool rsign = rhs.sign;
@@ -284,8 +284,8 @@ class Integer {
         }
 
         //iterators
-        auto C::const_iterator it_lhs = lhs._x.begin();
-        auto C::const_iterator it_rhs = rhs._x.begin();
+        typename C::const_iterator it_lhs = lhs._x.begin();
+        typename C::const_iterator it_rhs = rhs._x.begin();
 
         //iterate through, cmp each value
         while(it_lhs != lhs._x.end() && it_rhs != rhs._x.end()){
@@ -296,7 +296,7 @@ class Integer {
             }
             //if lhs value > rhs value, return false, final_result doenst matter
             else if(*it_lhs > *it_rhs){
-                return false
+                return false;
             }
 
         }
