@@ -1,15 +1,15 @@
-FILES :=
-	.travis.yml
-	dpk326-RunInteger.out
-	dpk326-TestInteger.c++
-	dpk326-TestInteger.out
-	Integer.h
-	RunInteger.c++
-	RunInteger.out
-	TestInteger.c++
-	TestInteger.out
-	html
-	Integer.log
+FILES :=									\
+	.travis.yml								\
+	integer-tests/dpk326-RunInteger.out		\
+	integer-tests/dpk326-TestInteger.c++	\
+	integer-tests/dpk326-TestInteger.out	\
+	Integer.h 								\
+	Integer.log								\
+	html									\
+	RunInteger.c++ 							\
+	RunInteger.out							\
+	TestInteger.c++							\
+	TestInteger.out							\
 
 ifeq ($(shell uname), Darwin)
     CXX       := g++
@@ -64,19 +64,19 @@ sync:
 config:
 	git config -l
 
+test: RunInteger.out TestInteger.out
+
 integer-tests:
 	git clone https://github.com/cs378-summer-2015/integer-tests
 
 html: Doxygen Integer.h RunInteger.c++ TestInteger.c++
-		doxygen Doxyfile
+	doxygen Doxyfile
 
 Integer.log:
 	git log > Integer.log
 
 Doxyfile:
 	doxygen -g
-
-test: RunInteger.out
 
 versions:
 	uname -a
@@ -111,3 +111,12 @@ RunInteger: Integer.h RunInteger.c++
 RunInteger.out: RunInteger
 	./RunInteger > RunInteger.out
 	cat RunInteger.out
+
+TestInteger: Integer.h RunInteger.c++ TestInteger.c++
+		$(CXX) $(COVFLAGS) $(CXXFLAGS) RunInteger.c++ TestInteger.c++ -o TestInteger $(LDFLAGS)
+
+TestInteger.out: TestInteger
+		$(VALGRIND) ./TestInteger  >  TestInteger.out 2>&1
+		$(GCOV) -b RunInteger.c++  >> TestInteger.out
+		$(GCOV) -b TestInteger.c++ >> TestInteger.out
+		cat TestInteger.out
