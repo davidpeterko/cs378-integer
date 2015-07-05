@@ -1,3 +1,16 @@
+FILES :=
+	.travis.yml
+	dpk326-RunInteger.out
+	dpk326-TestInteger.c++
+	dpk326-TestInteger.out
+	Integer.h
+	RunInteger.c++
+	RunInteger.out
+	TestInteger.c++
+	TestInteger.out
+	html
+	Integer.log
+
 ifeq ($(shell uname), Darwin)
     CXX       := g++
     CXXVER    := --version 2>&1 | grep c++
@@ -47,6 +60,21 @@ sync:
     --include "RunInteger.c++"         \
     --exclude "*"                      \
     . downing@$(CS):cs/cs378/github/c++/integer/
+
+config:
+	git config -l
+
+integer-tests:
+	git clone https://github.com/cs378-summer-2015/integer-tests
+
+html: Doxygen Integer.h RunInteger.c++ TestInteger.c++
+		doxygen Doxyfile
+
+Integer.log:
+	git log > Integer.log
+
+Doxyfile:
+	doxygen -g
 
 test: RunInteger.out
 
