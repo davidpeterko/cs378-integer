@@ -33,7 +33,6 @@
 template <typename II, typename FI>
 FI shift_left_digits (II b, II e, int n, FI x) {
                                                             //n is the number of times you shift?
-
     assert(n >= 0);                                         //n must be greater than or equal to 0, cant shift by negative value
 
     while( n > 0){                                          //fill front run with 0s
@@ -172,10 +171,46 @@ class Integer {
     // -----------
 
     /**
-     * <your documentation>
+     * lhs = left hand side, rhs = right handside
+     * this operator == checks if the 2 containers are equal size and values
      */
     friend bool operator == (const Integer& lhs, const Integer& rhs) {
-        // <your code>
+
+        int rhs_size = rhs._x.size();
+        int lhs_size = lhs._x.size();
+
+        assert(rhs_size != 0);
+        assert(lhs_size != 0);
+
+        //check container sizes
+        if(rhs_size != lhs_size){
+            //lhs size not equal to rhs size
+            return false;
+        }
+
+        //check for negative value
+        if(lhs.sign != rhs.sign){
+            //signs not equal
+            return false
+        }
+
+        //check values
+
+        //iterators
+        auto C::const_iterator it_lhs = lhs._x.begin();
+        auto C::const_iterator it_rhs = rhs._x.begin();
+
+        //use cbegin and cend for const iterators
+        while(it_lhs != lhs._x.cend() && it_rhs != rhs._x.cend()){
+
+            if(*it_rhs != *it_lhs){
+                return false;
+            }
+
+            ++it_rhs;
+            ++it_lhs;
+        }
+
         return false;}
 
     // -----------
@@ -183,7 +218,8 @@ class Integer {
     // -----------
 
     /**
-     * <your documentation>
+     * check to see if the values are no equal
+     * uses the == operator function form above implementation
      */
     friend bool operator != (const Integer& lhs, const Integer& rhs) {
         return !(lhs == rhs);}
@@ -193,18 +229,86 @@ class Integer {
     // ----------
 
     /**
-     * <your documentation>
+     * < operator
+     * returns true if all elements lhs < rhs are greater, false otherwise
      */
     friend bool operator < (const Integer& lhs, const Integer& rhs) {
-        // <your code>
-        return false;}
+
+        bool final_result = false;
+
+        int rsize = rhs._x.size();
+        int lsize = lhs._x.size();
+
+        assert(rhs_size != 0);
+        assert(lhs_size != 0);
+
+        //check for negative value
+        bool rsign = rhs.sign;
+        bool lsign = lhs.sign;
+
+        //rhs negative, lhs positive, l < -r false
+        if(rsign == true && lsign == false){
+            return false;
+        }
+
+        //rhs positive, lhs negative, -l < r true
+        if(rsign == false && lsign == true){
+            return true;
+        }
+
+        //both sides negative
+        if(rsign == true && lsign == true){
+
+        }
+
+        //both sides positive
+        if(rsign == false && lsign == false){
+
+            if(rsize > lsize){                      //rhs size > lhs size
+                return true;
+            }
+            else if(lsize > rsize){                 //rhs size < lhs size
+                return false;
+            }
+        }
+
+        //if boht negative, switch
+        if(rsign == true && lsign == true){
+
+            if(rsize > lsize){                      //as per negative
+                return false;                       
+            }
+            if(lsize > rsize){
+                return true;
+            }
+        }
+
+        //iterators
+        auto C::const_iterator it_lhs = lhs._x.begin();
+        auto C::const_iterator it_rhs = rhs._x.begin();
+
+        //iterate through, cmp each value
+        while(it_lhs != lhs._x.end() && it_rhs != rhs._x.end()){
+
+            //rhs value > lhs value, set to true, return
+            if(*it_rhs > *it_lhs){
+                final_result = true;
+            }
+            //if lhs value > rhs value, return false, final_result doenst matter
+            else if(*it_lhs > *it_rhs){
+                return false
+            }
+
+        }
+
+        return final_result;}
 
     // -----------
     // operator <=
     // -----------
 
     /**
-     * <your documentation>
+     * checks if rhs is greater than or equal to lhs
      */
     friend bool operator <= (const Integer& lhs, const Integer& rhs) {
         return !(rhs < lhs);}
@@ -214,7 +318,7 @@ class Integer {
     // ----------
 
     /**
-     * <your documentation>
+     * checks if rhs is less than lhs
      */
     friend bool operator > (const Integer& lhs, const Integer& rhs) {
         return (rhs < lhs);}
@@ -224,7 +328,7 @@ class Integer {
     // -----------
 
     /**
-     * <your documentation>
+     * checks if rhs is less than or equal to lhs
      */
     friend bool operator >= (const Integer& lhs, const Integer& rhs) {
         return !(lhs < rhs);}
@@ -234,7 +338,7 @@ class Integer {
     // ----------
 
     /**
-     * <your documentation>
+     * returns lhs + rhs
      */
     friend Integer operator + (Integer lhs, const Integer& rhs) {
         return lhs += rhs;}
@@ -244,7 +348,7 @@ class Integer {
     // ----------
 
     /**
-     * <your documentation>
+     * returns lhs - rhs
      */
     friend Integer operator - (Integer lhs, const Integer& rhs) {
         return lhs -= rhs;}
@@ -254,7 +358,7 @@ class Integer {
     // ----------
 
     /**
-     * <your documentation>
+     * returns lhs * rhs, multiply
      */
     friend Integer operator * (Integer lhs, const Integer& rhs) {
         return lhs *= rhs;}
@@ -264,10 +368,15 @@ class Integer {
     // ----------
 
     /**
-     * <your documentation>
+     * return division of lhs / rhs
      * @throws invalid_argument if (rhs == 0)
      */
     friend Integer operator / (Integer lhs, const Integer& rhs) {
+            
+        if(rhs == 0){
+            throw std::invalid_argument("RHS value cannot be 0.");
+        }
+
         return lhs /= rhs;}
 
     // ----------
@@ -275,10 +384,15 @@ class Integer {
     // ----------
 
     /**
-     * <your documentation>
+     * returns modulo lhs % rhs
      * @throws invalid_argument if (rhs <= 0)
      */
     friend Integer operator % (Integer lhs, const Integer& rhs) {
+            
+        if(rhs <= 0){
+            throw std::invalid_argument("RHS value cannot be <= 0.");
+        }
+
         return lhs %= rhs;}
 
     // -----------
@@ -286,10 +400,15 @@ class Integer {
     // -----------
 
     /**
-     * <your documentation>
+     * left shift lhs, by rhs 
      * @throws invalid_argument if (rhs < 0)
      */
     friend Integer operator << (Integer lhs, int rhs) {
+        
+        if(rhs < 0){
+            throw std::invalid_argument("RHS value cannot be < 0.");
+        }
+
         return lhs <<= rhs;}
 
     // -----------
@@ -297,10 +416,15 @@ class Integer {
     // -----------
 
     /**
-     * <your documentation>
+     * right shift lhs, by rhs
      * @throws invalid_argument if (rhs < 0)
      */
     friend Integer operator >> (Integer lhs, int rhs) {
+        
+        if(rhs < 0){
+            throw std::invalid_argument("RHS value cannot be < 0");
+        }
+
         return lhs >>= rhs;}
 
     // -----------
@@ -308,7 +432,7 @@ class Integer {
     // -----------
 
     /**
-     * <your documentation>
+     * output stream, << denotes a rhs value going to the lhs output holder
      */
     friend std::ostream& operator << (std::ostream& lhs, const Integer& rhs) {
         // <your code>
@@ -320,7 +444,7 @@ class Integer {
 
     /**
      * absolute value
-     * <your documentation>
+     * takes the abs value of the x value passed
      */
     friend Integer abs (Integer x) {
         return x.abs();}
@@ -331,10 +455,19 @@ class Integer {
 
     /**
      * power
-     * <your documentation>
+     * takes a vlaue x, and raises it to the value e
      * @throws invalid_argument if ((x == 0) && (e == 0)) || (e < 0)
      */
     friend Integer pow (Integer x, int e) {
+
+        if(x == 0 && e == 0){
+            throw std::invalid_argument("Both values cannot be 0.");
+        }
+
+        if(e < 0){
+            throw std::invalid_argument("Exponent value cannot be < 0.");
+        }
+
         return x.pow(e);}
 
     private:
@@ -343,7 +476,9 @@ class Integer {
         // ----
 
         C _x; // the backing container
-        // <your data>
+        bool sign;  //if this is true, then the value is negative
+        int size;    //size of container
+
 
     private:
         // -----
@@ -385,25 +520,38 @@ class Integer {
         // ----------
 
         /**
-         * <your documentation>
+         * subtraction
          */
         Integer operator - () const {
-            // <your code>
-            return Integer(0);}
+
+            //what does this do exactly?
+            // x = 5
+            //-x = -5
+            // x = -1
+            // -x = 1
+
+            if(*this.sign){
+                *this.sign = false;
+            }
+            else if(!*this.sign){
+                *this.sign = true;
+            }
+
+            return *this;}
 
         // -----------
         // operator ++
         // -----------
 
         /**
-         * post-increment of the object that is passed by the function
+         * pre-increment of the object that is passed by the function
          */
         Integer& operator ++ () {
             *this += 1;
             return *this;}
 
         /**
-         * pre-increment of the object that is passed by the function
+         * post-increment of the object that is passed by the function
          */
         Integer operator ++ (int) {
             Integer x = *this;
@@ -415,14 +563,14 @@ class Integer {
         // -----------
 
         /**
-         * post-decrement of the object that is passed by the function
+         * pre-decrement of the object that is passed by the function
          */
         Integer& operator -- () {
             *this -= 1;
             return *this;}
 
         /**
-         * pre-decrement of the object that is passed by the function
+         * post-decrement of the object that is passed by the function
          */
         Integer operator -- (int) {
             Integer x = *this;
