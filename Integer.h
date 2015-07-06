@@ -35,6 +35,10 @@ FI shift_left_digits (II b, II e, int n, FI x) {
                                                             //n is the number of times you shift?
     assert(n >= 0);                                         //n must be greater than or equal to 0, cant shift by negative value
 
+    //copy over
+
+    x = copy(b, e, x);
+
     while( n > 0){                                          //fill front run with 0s
         *x = 0;                                             //then pick up where x left off 
         ++x;                                                //in the next while loop below
@@ -67,6 +71,9 @@ FI shift_right_digits (II b, II e, int n, FI x) {
 
     assert( n >= 0);
 
+    //copy over
+    //x = copy(b, e, x);
+
     while(n > 0){
         ++b;                                                //increment b to the place to the rightside
         --n;                                                //so we can fill with 0 and then copy over    
@@ -97,7 +104,16 @@ FI shift_right_digits (II b, II e, int n, FI x) {
  */
 template <typename II1, typename II2, typename FI>
 FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
-    // <your code>
+
+
+    //check the signs!
+
+
+
+
+
+
+
     return x;}
 
 // ------------
@@ -117,7 +133,23 @@ FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
  */
 template <typename II1, typename II2, typename FI>
 FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
-    // <your code>
+
+    //make copies of the iterators?
+    //use b1 e1 b2 e2 to iteratur thru the containers
+    //x to output with forward iterator
+
+
+    /*
+If both signs are positive, the answer will be positive.
+Example: 14 - (-6) = 14 + 6 = 20
+If both signs are negative, the answer will be negative.
+Example: -14 - (+6) = -14 - 6 = -20
+If the signs are different subtract the smaller absolute value from the larger absolute value. The sign will be the sign of the integer that produced the larger absolute value. 
+Example: 14 - (+6) = 14 - 6 = 8 
+Example: -14 - (-6) = -14 + 6 = -8
+
+
+    */
     return x;}
 
 // -----------------
@@ -160,6 +192,12 @@ FI divides_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
     // <your code>
     return x;}
 
+
+/* -------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------*/
+
+
 // -------
 // Integer
 // -------
@@ -200,8 +238,7 @@ class Integer {
         typename C::const_iterator it_lhs = lhs._x.begin();
         typename C::const_iterator it_rhs = rhs._x.begin();
 
-        //use cbegin and cend for const iterators
-        while(it_lhs != lhs._x.cend() && it_rhs != rhs._x.cend()){
+        while(it_lhs != lhs._x.end() && it_rhs != rhs._x.end()){
 
             if(*it_rhs != *it_lhs){
                 return false;
@@ -210,6 +247,8 @@ class Integer {
             ++it_rhs;
             ++it_lhs;
         }
+
+        //check if operators equal to end?
 
         return false;}
 
@@ -242,26 +281,21 @@ class Integer {
         assert(rsize != 0);
         assert(lsize != 0);
 
-        //check for negative value
         bool rsign = rhs.sign;
         bool lsign = lhs.sign;
 
-        //rhs negative, lhs positive, l < -r false
         if(rsign == true && lsign == false){
             return false;
         }
 
-        //rhs positive, lhs negative, -l < r true
         if(rsign == false && lsign == true){
             return true;
         }
 
-        //both sides negative
         if(rsign == true && lsign == true){
 
         }
 
-        //both sides positive
         if(rsign == false && lsign == false){
 
             if(rsize > lsize){                      //rhs size > lhs size
@@ -272,7 +306,6 @@ class Integer {
             }
         }
 
-        //if boht negative, switch
         if(rsign == true && lsign == true){
 
             if(rsize > lsize){                      //as per negative
@@ -290,11 +323,9 @@ class Integer {
         //iterate through, cmp each value
         while(it_lhs != lhs._x.end() && it_rhs != rhs._x.end()){
 
-            //rhs value > lhs value, set to true, return
             if(*it_rhs > *it_lhs){
                 final_result = true;
             }
-            //if lhs value > rhs value, return false, final_result doenst matter
             else if(*it_lhs > *it_rhs){
                 return false;
             }
@@ -435,8 +466,15 @@ class Integer {
      * output stream, << denotes a rhs value going to the lhs output holder
      */
     friend std::ostream& operator << (std::ostream& lhs, const Integer& rhs) {
-        // <your code>
-        return lhs << "0";}
+
+        int rsize = rhs._x.size();
+
+        //output the container of rhs
+        for(int i = 0; i < rsize; ++i){
+            lhs << rhs._x[i];
+        }
+
+        return lhs;}
 
     // ---
     // abs
@@ -520,9 +558,19 @@ class Integer {
         // ----------
 
         /**
-         * subtraction
+         * subtraction or negate?
          */
         Integer operator - () const {
+
+            Integer value = *this;
+            bool value_sign = value.sign;
+
+            if(value_sign){
+                value.sign = false;
+            }
+            else if(!value_sign){
+                value.sign = true;
+            }
 
             //what does this do exactly?
             // x = 5
@@ -530,14 +578,7 @@ class Integer {
             // x = -1
             // -x = 1
 
-            if(*this.sign){
-                *this.sign = false;
-            }
-            else if(!*this.sign){
-                *this.sign = true;
-            }
-
-            return *this;}
+            return value;}
 
         // -----------
         // operator ++
@@ -630,8 +671,6 @@ class Integer {
                 throw std::invalid_argument("Cannot divide by zero.");
             }
 
-            *this = *this / rhs._x;
-
             return *this;}
 
         // -----------
@@ -645,10 +684,10 @@ class Integer {
         Integer& operator %= (const Integer& rhs) {
             
             if(rhs <= 0){
-                throw std::invalid_argument("Value of rhs is <= 0.");
+                throw std::invalid_argument("RHS cannot be <= 0.");
             }
 
-            *this = *this % rhs._x;
+            
 
             return *this;}
 
@@ -692,13 +731,9 @@ class Integer {
          */
         Integer& abs () {
 
-            if(*this > 0){
-                return *this;
-            }
-            else if(*this < 0){
-                *this = *this * -1;
-
-                return *this;
+            //swap signs
+            if(this.sign){
+                this.sign = false;
             }
 
             return *this;

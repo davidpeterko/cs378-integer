@@ -46,6 +46,11 @@ CXXFLAGS := -pedantic -std=c++11 -Wall
 
 .PRECIOUS: %.app
 
+check:
+	@for i in $(FILES);
+	do
+	[ -e $$i ] && echo "$$i found" || echo "$$i NOT FOUND";	\
+
 clean:
 	rm -f *.gcda
 	rm -f *.gcno
@@ -64,19 +69,21 @@ sync:
 config:
 	git config -l
 
-test: RunInteger.out TestInteger.out
+test: 
+	RunInteger.out TestInteger.out
 
 integer-tests:
 	git clone https://github.com/cs378-summer-2015/integer-tests
 
-html: Doxygen Integer.h RunInteger.c++ TestInteger.c++
+Doxyfile:
+	doxygen -g
+
+html: 
+	Doxygen Integer.h RunInteger.c++ TestInteger.c++
 	doxygen Doxyfile
 
 Integer.log:
 	git log > Integer.log
-
-Doxyfile:
-	doxygen -g
 
 versions:
 	uname -a
