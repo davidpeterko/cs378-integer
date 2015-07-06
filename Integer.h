@@ -17,6 +17,20 @@
 #include <string>    // string
 #include <vector>    // vector
 
+
+
+
+
+template <typename II>
+void reverse_num (II b, II e) {
+    while ((b != e) && (b != --e)) {
+        std::swap(*b, *e);
+        ++b;
+    }
+}
+
+
+
 // -----------------
 // shift_left_digits
 // -----------------
@@ -107,9 +121,44 @@ FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 
     //check the signs!
 
-
-
-
+int lengthII1 = e1 - b1;	
+int lengthII2 = e2 - b2;
+if (size2 < sizeB)
+	x =  plus_digits(b2, e2, b1, e1, x);
+ else {
+        int sum = 0; 
+        int size = 0;
+        while (lengthII2 != 0) {
+            --lengthII1;
+            --lengthII2;
+            // Add the least significant numbers first.
+            sum += *(b1 + lengthII1) + *(b2 + lengthII2);
+            // Put the mod of the sum into the output.
+            *x = sum % 10;
+            // Have sum contain the remainder.
+            sum /= 10;
+            ++x;
+            ++size;
+            
+        }
+        // Add left over digits from the larger number.
+        while (lengthII1 != 0) {
+            --lengthII1;
+            sum += *(b1 + lengthII1);
+            *x = sum % 10;
+            sum /= 10;
+            ++x;
+            ++size;
+        }
+        // Add left over remainder.
+        if (sum != 0) {
+            *x = sum;
+            ++x;
+            ++size;
+        }
+        // The digits are placed into x backwards; reverse list.
+        reverse_num(x - size, x);
+    }
 
 
 
@@ -136,6 +185,7 @@ FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
     //make copies of the iterators?
     //use b1 e1 b2 e2 to iteratur thru the containers
     //x to output with forward iterator
+
 
 
     /*
