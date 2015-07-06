@@ -17,10 +17,9 @@
 #include <string>    // string
 #include <vector>    // vector
 
+using namespace std;
 
-
-
-
+/* our own function */
 template <typename II>
 void reverse_num (II b, II e) {
     while ((b != e) && (b != --e)) {
@@ -28,8 +27,6 @@ void reverse_num (II b, II e) {
         ++b;
     }
 }
-
-
 
 // -----------------
 // shift_left_digits
@@ -84,8 +81,12 @@ FI shift_right_digits (II b, II e, int n, FI x) {
 
     assert( n >= 0);
 
-    //copy over
-    //x = copy(b, e, x);
+    //shift wont matter if:
+    if(distance(b, e) <= n){
+        *x = 0;
+        ++x;
+        return x;
+    }
 
     while(n > 0){
         ++b;                                                //increment b to the place to the rightside
@@ -121,46 +122,44 @@ FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 
     //check the signs!
 
-int lengthII1 = e1 - b1;	
-int lengthII2 = e2 - b2;
-if (lengthII1 < lengthII2)
-	x =  plus_digits(b2, e2, b1, e1, x);
- else {
-        int sum = 0; 
-        int size = 0;
-        while (lengthII2 != 0) {
-            --lengthII1;
-            --lengthII2;
-            // Add the least significant numbers first.
-            sum += *(b1 + lengthII1) + *(b2 + lengthII2);
-            // Put the mod of the sum into the output.
-            *x = sum % 10;
-            // Have sum contain the remainder.
-            sum /= 10;
-            ++x;
-            ++size;
-            
+    int lengthII1 = e1 - b1;    
+    int lengthII2 = e2 - b2;
+    if (lengthII1 < lengthII2)
+        x =  plus_digits(b2, e2, b1, e1, x);
+    else {
+            int sum = 0; 
+            int size = 0;
+            while (lengthII2 != 0) {
+                --lengthII1;
+                --lengthII2;
+                // Add the least significant numbers first.
+                sum += *(b1 + lengthII1) + *(b2 + lengthII2);
+                // Put the mod of the sum into the output.
+                *x = sum % 10;
+                // Have sum contain the remainder.
+                sum /= 10;
+                ++x;
+                ++size;
+                
+            }
+            // Add left over digits from the larger number.
+            while (lengthII1 != 0) {
+                --lengthII1;
+                sum += *(b1 + lengthII1);
+                *x = sum % 10;
+                sum /= 10;
+                ++x;
+                ++size;
+            }
+            // Add left over remainder.
+            if (sum != 0) {
+                *x = sum;
+                ++x;
+                ++size;
+            }
+            // The digits are placed into x backwards; reverse list.
+            reverse_num(x - size, x);
         }
-        // Add left over digits from the larger number.
-        while (lengthII1 != 0) {
-            --lengthII1;
-            sum += *(b1 + lengthII1);
-            *x = sum % 10;
-            sum /= 10;
-            ++x;
-            ++size;
-        }
-        // Add left over remainder.
-        if (sum != 0) {
-            *x = sum;
-            ++x;
-            ++size;
-        }
-        // The digits are placed into x backwards; reverse list.
-        reverse_num(x - size, x);
-    }
-
-
 
     return x;}
 
@@ -185,7 +184,6 @@ FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
     //make copies of the iterators?
     //use b1 e1 b2 e2 to iteratur thru the containers
     //x to output with forward iterator
-
 
 
     /*
@@ -563,7 +561,7 @@ class Integer {
         // ----
 
         C _x; // the backing container
-        bool sign = false;  //if this is true, then the value is negative
+        bool sign;  //if this is true, then the value is negative
         int size;    //size of container
 
 
@@ -583,23 +581,33 @@ class Integer {
 
         /**
          * creates a Integer object initiated with value 
-
-        notes:
-
-        1. set a value, set a size default 0
-        2. check value to assign the sign, if zero, add to container and increase size
-        3. if negative, set the sign to true, and make the value back to positive? maybe
-        4. then check if value != 0 then do:
-            -push back value % 10
-            -then value divided by 10
-            -increase size
-            -resize the container to new size
-
-
-
+            sets sign, and pushes it onto container
          */
         Integer (int value) {
-            // <your code>
+            size = 0;
+
+            if(value > 0){
+                sign = false;
+            }
+            else if(value < 0){
+                sign = true;
+                value = -value;                                     //negate, use the sign atribute to check for negatives
+            }
+
+            if(value == 0){
+                _x.push_back(0);
+            }
+      
+            //storing the least significant digits first will make it easier to do addition and th eother functions, no need to iterate backwards
+            while(value > 0){  
+                int sig_digit = value % 10;
+                _x.push_back(sig_digit);
+                ++size;
+
+                value = value / 10;
+            }
+
+            _x.resize(size);
             assert(valid());}
 
         /**
@@ -627,6 +635,13 @@ class Integer {
             valid?
 
             */
+
+            
+
+
+
+
+
 
             if (!valid())
                 throw std::invalid_argument("Integer::Integer()");}
