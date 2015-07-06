@@ -36,8 +36,7 @@ FI shift_left_digits (II b, II e, int n, FI x) {
     assert(n >= 0);                                         //n must be greater than or equal to 0, cant shift by negative value
 
     //copy over
-
-    x = copy(b, e, x);
+    //x = copy(b, e, x);
 
     while( n > 0){                                          //fill front run with 0s
         *x = 0;                                             //then pick up where x left off 
@@ -627,8 +626,6 @@ class Integer {
          */
         Integer& operator += (const Integer& rhs) {
 
-            *this = *this + rhs._x;
-
             return *this;}
 
         // -----------
@@ -640,8 +637,6 @@ class Integer {
          */
         Integer& operator -= (const Integer& rhs) {
 
-            *this = *this - rhs._x;
-
             return *this;}
 
         // -----------
@@ -652,8 +647,6 @@ class Integer {
          * multiply the value by the ths
          */
         Integer& operator *= (const Integer& rhs) {
-
-            *this = *this * rhs._x;
 
             return *this;}
 
@@ -732,8 +725,8 @@ class Integer {
         Integer& abs () {
 
             //swap signs
-            if(this.sign){
-                this.sign = false;
+            if(this->sign){
+                this->sign = false;
             }
 
             return *this;

@@ -11,6 +11,7 @@ FILES :=									\
 	TestInteger.c++							\
 	TestInteger.out							\
 
+
 ifeq ($(shell uname), Darwin)
     CXX       := g++
     CXXVER    := --version 2>&1 | grep c++
@@ -46,10 +47,13 @@ CXXFLAGS := -pedantic -std=c++11 -Wall
 
 .PRECIOUS: %.app
 
+all: RunCollatz TestCollatz
+
 check:
-	@for i in $(FILES);
-	do
-	[ -e $$i ] && echo "$$i found" || echo "$$i NOT FOUND";	\
+		@for i in $(FILES);                                         \
+		do                                                          \
+        [ -e $$i ] && echo "$$i found" || echo "$$i NOT FOUND"; \
+    done
 
 clean:
 	rm -f *.gcda
@@ -57,26 +61,14 @@ clean:
 	rm -f *.gcov
 	rm -f RunInteger
 
-sync:
-	@echo `pwd`
-	@rsync -r -t -u -v --delete        \
-    --include "Integer.h"              \
-    --include "makefile"               \
-    --include "RunInteger.c++"         \
-    --exclude "*"                      \
-    . downing@$(CS):cs/cs378/github/c++/integer/
-
 config:
 	git config -l
 
 test: 
-	RunInteger.out TestInteger.out
+	RunInteger.out	TestInteger.out
 
 integer-tests:
 	git clone https://github.com/cs378-summer-2015/integer-tests
-
-Doxyfile:
-	doxygen -g
 
 html: 
 	Doxygen Integer.h RunInteger.c++ TestInteger.c++
@@ -84,6 +76,9 @@ html:
 
 Integer.log:
 	git log > Integer.log
+
+Doxyfile:
+	doxygen -g
 
 versions:
 	uname -a
@@ -120,10 +115,10 @@ RunInteger.out: RunInteger
 	cat RunInteger.out
 
 TestInteger: Integer.h RunInteger.c++ TestInteger.c++
-		$(CXX) $(COVFLAGS) $(CXXFLAGS) RunInteger.c++ TestInteger.c++ -o TestInteger $(LDFLAGS)
+	$(CXX) $(COVFLAGS) $(CXXFLAGS) RunInteger.c++ TestInteger.c++ -o TestInteger $(LDFLAGS)
 
 TestInteger.out: TestInteger
-		$(VALGRIND) ./TestInteger  >  TestInteger.out 2>&1
-		$(GCOV) -b RunInteger.c++  >> TestInteger.out
-		$(GCOV) -b TestInteger.c++ >> TestInteger.out
-		cat TestInteger.out
+	$(VALGRIND) ./TestInteger  >  TestInteger.out 2>&1
+	$(GCOV) -b RunInteger.c++  >> TestInteger.out
+	$(GCOV) -b TestInteger.c++ >> TestInteger.out
+	cat TestInteger.out
