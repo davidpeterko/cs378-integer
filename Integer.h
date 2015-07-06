@@ -123,7 +123,7 @@ FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 
 int lengthII1 = e1 - b1;	
 int lengthII2 = e2 - b2;
-if (size2 < sizeB)
+if (lengthII1 < lengthII2)
 	x =  plus_digits(b2, e2, b1, e1, x);
  else {
         int sum = 0; 
