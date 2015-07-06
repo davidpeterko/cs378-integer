@@ -513,7 +513,7 @@ class Integer {
         // ----
 
         C _x; // the backing container
-        bool sign;  //if this is true, then the value is negative
+        bool sign = false;  //if this is true, then the value is negative
         int size;    //size of container
 
 
@@ -533,6 +533,20 @@ class Integer {
 
         /**
          * creates a Integer object initiated with value 
+
+        notes:
+
+        1. set a value, set a size default 0
+        2. check value to assign the sign, if zero, add to container and increase size
+        3. if negative, set the sign to true, and make the value back to positive? maybe
+        4. then check if value != 0 then do:
+            -push back value % 10
+            -then value divided by 10
+            -increase size
+            -resize the container to new size
+
+
+
          */
         Integer (int value) {
             // <your code>
@@ -543,7 +557,27 @@ class Integer {
          * @throws invalid_argument if value is not a valid representation of an Integer
          */
         explicit Integer (const std::string& value) {
-            // <your code>
+            //takes in a string, then use that value
+
+            /**
+
+            could use value[i]
+
+            iterate through the string with iterators, a string::const_iterator
+            check if first char is a '-', if so set the sign to true
+            resize to size-1, cause got rid of the negative
+            for loop through the value[] and check if that digit is valid, isdigit, or comparison to a numebr
+            if not a digit, throw invalid argument error
+
+            else if not a negative, then resize the container to the size of the value
+            do the same thing, then convert that part of the string doing - '0' to get it in the container
+
+            else if not digit, throw error
+
+            valid?
+
+            */
+
             if (!valid())
                 throw std::invalid_argument("Integer::Integer()");}
 
@@ -625,6 +659,8 @@ class Integer {
          * adds the rhs value to this
          */
         Integer& operator += (const Integer& rhs) {
+            //result need to be big enough
+
 
             return *this;}
 
