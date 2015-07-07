@@ -494,11 +494,43 @@ using namespace std;
 // ---
 // <<=
 // ---
+	TEST(IntegerFixture, shift_left1){
+                Integer<int> first = 9;
+                Integer<int> second = 2;
+
+                first <<= second;
+
+                Integer<int> result = 90;
+
+                ASSERT_EQ(first, result);
+        }
+
+	TEST(IntegerFixture, shift_left1){
+                Integer<int> first = 999;
+                Integer<int> second = 0;
+
+                first <<= second;
+            
+                Integer<int> result = 999;
+            
+                ASSERT_EQ(first, result);
+        }
+
+	TEST(IntegerFixture, shift_left1){
+                Integer<int> first = 9999;
+                Integer<int> second = 5;
+
+                first <<= second;
+            
+                Integer<int> result = 999900000;
+            
+                ASSERT_EQ(first, result);
+        }
 
 // ---
 // >>=
 // ---
-	TEST(IntegerFixture, shift_right_equal_op_1) {
+	TEST(IntegerFixture, shift_right1) {
 	    Integer<int> a = 12000;
 	    int b = 3;
 	    Integer<int> c = 12;
@@ -508,7 +540,7 @@ using namespace std;
    	    ASSERT_EQ(a, c);
 	}
 
-	TEST(IntegerFixture, shift_right_equal_op_2) {
+	TEST(IntegerFixture, shift_right2) {
 	    Integer<int> a("999999999999");
 	    int b = 11;
 	    Integer<int> c("9");
@@ -518,7 +550,7 @@ using namespace std;
   	  ASSERT_EQ(a, c);
 	}
 
-	TEST(IntegerFixture, shift_right_equal_op_3) {
+	TEST(IntegerFixture, shift_right3) {
 	    Integer<int> a = 111;
 	    int b = 0;
 	    Integer<int> c = 111;
