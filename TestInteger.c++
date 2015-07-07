@@ -498,6 +498,35 @@ using namespace std;
 // ---
 // >>=
 // ---
+	TEST(IntegerFixture, shift_right_equal_op_1) {
+	    Integer<int> a = 12000;
+	    int b = 3;
+	    Integer<int> c = 12;
+
+   	    a >>= b;
+
+   	    ASSERT_EQ(a, c);
+	}
+
+	TEST(IntegerFixture, shift_right_equal_op_2) {
+	    Integer<int> a("999999999999");
+	    int b = 11;
+	    Integer<int> c("9");
+
+	    a >>= b;
+
+  	  ASSERT_EQ(a, c);
+	}
+
+	TEST(IntegerFixture, shift_right_equal_op_3) {
+	    Integer<int> a = 111;
+	    int b = 0;
+	    Integer<int> c = 111;
+
+	    a >>= b;
+
+	    ASSERT_EQ(a, c);
+	}
 
 // ---
 // abs
