@@ -961,7 +961,6 @@ class Integer {
             this->_x.resize(size + n);
 
             //reverse iterate then shift
-            typename C::reverse_iterator it = shift_left_digits(*this->_x.rbegin(), *this->_x.rend(), n, _x.rbegin());
 
             return *this;}
 
@@ -999,8 +998,7 @@ class Integer {
             this->_x.resize(this->_x.size() - n);
 
             //reverse iterate then shift
-            typename C::reverse_iterator it = shift_left_digits(*this->_x.rbegin(), *this->_x.rend(), n, _x.rbegin());
-
+            
             return *this;}
 
         // ---

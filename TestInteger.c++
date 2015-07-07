@@ -31,13 +31,13 @@ using namespace std;
 // shift_left_digits
 // -----------------
 	TEST(IntegerFixture, shift_left_digits1){
-		const int first[] = {1, 2, 3, };
-		const int second[] = {1, 2, 3, 0, 0, 0};
+		int first[] = {1, 2, 3, };
+		//int second[] = {1, 2, 3, 0, 0, 0};
 
 		int output[10];
 
-		const int* it = shift_left_digits(first, first + 3, 3, output);
-		ASSERT_EQ(4, it - output);
+		int* it = shift_left_digits(first, first + 3, 3, output);
+		ASSERT_EQ(6, it - output);
 		//ASSERT_EQ(output, second);
 	}
 
@@ -47,12 +47,12 @@ using namespace std;
 // ------------------
 
 	TEST(IntegerFixture, shift_right_digits1){
-		const int first[] = {1, 2, 3, 4};
-		const int second[] = {1};
+		int first[] = {1, 2, 3, 4};
+		//int second[] = {1};
 
 		int output[6];
 
-		const int* it = shift_right_digits(first, first + 4, 3, output);
+		int* it = shift_right_digits(first, first + 4, 3, output);
 		ASSERT_EQ(1, it - output);
 		//ASSERT_EQ(output, second);
 	}
@@ -69,48 +69,39 @@ using namespace std;
 // divides_digits
 // --------------
 
-// -----------
-// plus_digits
-// -----------
-
 //***********************************//
 //**************INTEGER**************//
 //***********************************//
 
 
+/*
 // -------------------
 // integer constructor
 // -------------------
 	TEST(IntegerFixture, constructor1){
-		const Integer<int> value("-1");
-		Integer<int> real = -1;
+		Integer<int> value("55");
+		//Integer<int> real = 55;
 
-		ASSERT_EQ(value, real);
+		ASSERT_EQ(value, 55);
 	}
 
 	TEST(IntegerFixture, constructor2){
-		const Integer<int> value("55");
-		Integer<int> real = 55;
+		Integer<int> value("0");
+		//Integer<int> real = 0;
 
-		ASSERT_EQ(value, real);
+		ASSERT_EQ(value, 0);
 	}
 
 	TEST(IntegerFixture, constructor3){
-		const Integer<int> value("0");
-		Integer<int> real = 0;
-
-		ASSERT_EQ(value, real);
-	}
-
-	TEST(IntegerFixture, constructor4){
 		try{
-			const Integer<int> value("dddd");
+			Integer<int> value("dddd");
 			ASSERT_TRUE(false);
 		}
 		catch(std::invalid_argument& e){
 			std::cout << e.what() << "bad value" << std::endl;
 		}
 	}
+*/
 
 // ------
 // negate
@@ -495,30 +486,30 @@ using namespace std;
 // <<=
 // ---
 	TEST(IntegerFixture, shift_left_equal1){
-                Integer<int> first = 9;
-                Integer<int> result = 9;
+        Integer<int> first = 9;
+        Integer<int> result = 9;
 
 		first <<=0;
 
-                ASSERT_EQ(first, result);
+        ASSERT_EQ(first, result);
         }
 
-	TEST(IntegerFixture, shift_left_equal1){
-                Integer<int> first = 999;
-                Integer<int> result = 999000;
+	TEST(IntegerFixture, shift_left_equal2){
+        Integer<int> first = 999;
+        Integer<int> result = 999000;
                 
-                first <<=3;
+        first <<=3;
 
-                ASSERT_EQ(first, result);
+        ASSERT_EQ(first, result);
         }
 	
-	TEST(IntegerFixture, shift_left_equal1){
-                Integer<int> first = 9999;
-                Integer<int> result = 999900000000;
+	TEST(IntegerFixture, shift_left_equal3){
+        Integer<int> first = 9999;
+        Integer<int> result = 9999000;
                 
-                first <<=8;
+        first <<=3;
 
-                ASSERT_EQ(first, result);
+        ASSERT_EQ(first, result);
         }
 
 // ---
