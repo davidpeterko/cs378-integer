@@ -28,6 +28,20 @@ void reverse_num (II b, II e) {
     }
 }
 
+ 
+template <typename II, typename OI>
+OI copy_reverse (II b, II e, OI x) {
+    int size = e - b;
+    assert(size >= 0);
+    while (b != e) {
+        --size;
+        *(x + size) = *b;
+        ++b;
+    }
+    return x;
+}
+
+
 // -----------------
 // shift_left_digits
 // -----------------
@@ -186,6 +200,85 @@ FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
     //x to output with forward iterator
 
 
+
+int lengthII1 = e1 - b1;
+int lengthII2 = e2 - b2;
+if (*b2 == 0 && lengthII2 == 1) {
+	while (b1 != e1) {
+            *x = *b1;
+            ++x;
+            ++b1;
+        }
+    }
+else if (lengthII2 > lengthII1) 
+	x = minus_digits(b2, e2, b1, e1, x);
+else {
+	int temp1[20000];
+	int temp2[20000];
+	copy_reverse(b1, e1, temp1);
+	copy_reverse(b2, e2, temp2);
+	int i1 = 0;
+	int i2 = 0;
+	int diff = 0; 
+	int size = 0;
+	int num1 = 0;
+	int num2 = 0;
+	bool zero_remainder = false;
+
+        while (i2 < lengthII2) {
+            num1 += temp1[i1];
+            num2 = temp2[i2];
+            // If the sum of num1 is negative, roll over to 9
+            if (num1 == -1) {
+                num1 = 9;
+                zero_remainder = true;
+            }
+            // If num1 is less than num2 add 10 to num1
+            if (num1 < num2)
+                num1 += 10;
+            diff = num1 - num2;
+            // If the last number diff is 0 don't copy it to x
+            if (diff == 0 && i1 == (lengthII1 - 1)) 
+                --size;
+            else {
+                *x = diff % 10;
+                ++x;
+            }
+            // Account for negative diff
+            if (num1 >= 10 || zero_remainder) {
+                num1 = -1;
+                zero_remainder = false;
+            }
+            else 
+                num1 = 0; 
+            ++i1;
+            ++i2;
+            ++size;
+        }
+        // Minus extra digits from the first number
+        while (i1 < lengthII1) {
+            num1 += temp1[i1];
+            // If the last number diff is 0 don't copy it to x.
+            if (num1 == 0 && i1 == (lengthII1 - 1)) {
+            }
+            else {
+                *x = num1;
+                ++size;
+                ++x;
+            } 
+            num1 = 0;
+            ++i1;
+        }
+        // The digits are placed into x backwards; reverse list.
+        reverse_num(x - size, x);
+    }
+    return x;}
+
+
+
+
+
+
     /*
 If both signs are positive, the answer will be positive.
 Example: 14 - (-6) = 14 + 6 = 20
@@ -197,7 +290,7 @@ Example: -14 - (-6) = -14 + 6 = -8
 
 
     */
-    return x;}
+    
 
 // -----------------
 // multiplies_digits
