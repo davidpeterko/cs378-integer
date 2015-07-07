@@ -64,7 +64,7 @@ FI shift_left_digits (II b, II e, int n, FI x) {
     //x = copy(b, e, x);
 
     if(n == 0){                                             //no shifts, just return a copy of it
-        x = copy(b, e, x);
+        copy(b, e, x);
         return x;
     }
 
@@ -744,7 +744,7 @@ class Integer {
             //if "-555"
             if(value[0] == '-'){
                 _x.resize(size - 1);
-                _x.sign = true;
+                sign = true;
 
 
                 for(int i = 1; i < size; ++i){
@@ -869,6 +869,10 @@ class Integer {
          */
         Integer& operator -= (const Integer& rhs) {
 
+
+
+
+
             return *this;}
 
         // -----------
@@ -879,6 +883,12 @@ class Integer {
          * multiply the value by the ths
          */
         Integer& operator *= (const Integer& rhs) {
+
+            //check signs
+            //negative * negative, should be positive, so this->sign shoudl be false;
+            //if rhs->sign is negative, then this is positive, so this->true
+
+            //make your iterators, then call multiplies digits, thenr esize your container 
 
             return *this;}
 

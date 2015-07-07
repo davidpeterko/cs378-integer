@@ -66,11 +66,11 @@ RunInteger.out: RunInteger
 	./RunInteger > RunInteger.out
 	cat RunInteger.out
 
-TestInteger: RunInteger.c++ TestInteger.c++
-	$(CXX) $(COVFLAGS) $(CXXFLAGS) RunInteger.c++ TestInteger.c++ -o TestInteger $(LDFLAGS)
+TestInteger: Integer.h TestInteger.c++
+	$(CXX) $(COVFLAGS) $(CXXFLAGS) Integer.h TestInteger.c++ -o TestInteger $(LDFLAGS)
 
 TestInteger.out: TestInteger
 	$(VALGRIND) ./TestInteger  >  TestInteger.out 2>&1
-	$(GCOV) -b RunInteger.c++  >> TestInteger.out
+	$(GCOV) -b Integer.h       >> TestInteger.out
 	$(GCOV) -b TestInteger.c++ >> TestInteger.out
 	cat TestInteger.out
