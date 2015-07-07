@@ -2,7 +2,7 @@
 // cs378-pfd/PFD.c++
 // Copyright (C) 2015
 // David Peter Ko
-// Josh Gutierrez
+// Julio Maldonado
 // ------------------
 
 // -------
@@ -448,7 +448,7 @@ using namespace std;
 		Integer<int> first = 15;
 		Integer<int> second = 3;
 
-		first = second;
+		first /= second;
 
 		Integer<int> result = 5;
 
@@ -462,7 +462,7 @@ using namespace std;
                 Integer<int> first = 4;
                 Integer<int> second = 2;
 
-                first /= second;
+                first %= second;
 
                 Integer<int> result = 0;
 
@@ -473,7 +473,7 @@ using namespace std;
                 Integer<int> first = 45;
                 Integer<int> second = 40;
 
-                first /= second;
+                first %= second;
 
                 Integer<int> result = 5;
 
@@ -484,7 +484,7 @@ using namespace std;
                 Integer<int> first = 15;
                 Integer<int> second = 4;
 
-                first = second;
+                first %= second;
 
                 Integer<int> result = 3;
 
@@ -496,31 +496,26 @@ using namespace std;
 // ---
 	TEST(IntegerFixture, shift_left1){
                 Integer<int> first = 9;
-                Integer<int> second = 2;
+                first <<= 0;
 
-                first <<= second;
-
-                Integer<int> result = 90;
+                Integer<int> result = 9;
 
                 ASSERT_EQ(first, result);
         }
 
-	TEST(IntegerFixture, shift_left1){
-                Integer<int> first = 999;
-                Integer<int> second = 0;
+	TEST(IntegerFixture, shift_left2){
+                Integer<int> first = 50;
 
-                first <<= second;
+                first <<= 1;
             
-                Integer<int> result = 999;
+                Integer<int> result =500;
             
                 ASSERT_EQ(first, result);
         }
 
-	TEST(IntegerFixture, shift_left1){
+	TEST(IntegerFixture, shift_left3){
                 Integer<int> first = 9999;
-                Integer<int> second = 5;
-
-                first <<= second;
+                first <<= 5;
             
                 Integer<int> result = 999900000;
             
