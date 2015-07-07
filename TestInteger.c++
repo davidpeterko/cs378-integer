@@ -458,7 +458,7 @@ using namespace std;
 // --
 // %=
 // --
-	TEST(IntegerFixture, mad1){
+	TEST(IntegerFixture, mod1){
                 Integer<int> first = 4;
                 Integer<int> second = 2;
 
@@ -469,7 +469,7 @@ using namespace std;
                 ASSERT_EQ(first, result);
         }
 
-        TEST(IntegerFixture, mad2){
+        TEST(IntegerFixture, mod2){
                 Integer<int> first = 45;
                 Integer<int> second = 40;
 
@@ -494,7 +494,7 @@ using namespace std;
 // ---
 // <<=
 // ---
-	TEST(IntegerFixture, shift_left1){
+	TEST(IntegerFixture, shift_left_equal1){
                 Integer<int> first = 9;
                 first <<= 0;
 
@@ -503,7 +503,7 @@ using namespace std;
                 ASSERT_EQ(first, result);
         }
 
-	TEST(IntegerFixture, shift_left2){
+	TEST(IntegerFixture, shift_left_equal2){
                 Integer<int> first = 50;
 
                 first <<= 1;
@@ -513,7 +513,7 @@ using namespace std;
                 ASSERT_EQ(first, result);
         }
 
-	TEST(IntegerFixture, shift_left3){
+	TEST(IntegerFixture, shift_left_equal3){
                 Integer<int> first = 9999;
                 first <<= 5;
             
@@ -525,32 +525,29 @@ using namespace std;
 // ---
 // >>=
 // ---
-	TEST(IntegerFixture, shift_right1) {
+	TEST(IntegerFixture, shift_right_equal1) {
 	    Integer<int> a = 12000;
-	    int b = 3;
 	    Integer<int> c = 12;
 
-   	    a >>= b;
+   	    a >>= 3;
 
    	    ASSERT_EQ(a, c);
 	}
 
-	TEST(IntegerFixture, shift_right2) {
+	TEST(IntegerFixture, shift_right_equal2) {
 	    Integer<int> a("999999999999");
-	    int b = 11;
 	    Integer<int> c("9");
 
-	    a >>= b;
+	    a >>= 11;
 
   	  ASSERT_EQ(a, c);
 	}
 
-	TEST(IntegerFixture, shift_right3) {
+	TEST(IntegerFixture, shift_right_equal3) {
 	    Integer<int> a = 111;
-	    int b = 0;
 	    Integer<int> c = 111;
 
-	    a >>= b;
+	    a >>= 0;
 
 	    ASSERT_EQ(a, c);
 	}

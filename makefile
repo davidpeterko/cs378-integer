@@ -50,8 +50,7 @@ test: RunInteger.out TestInteger.out
 integer-tests:
 	git clone https://github.com/cs378-summer-2015/integer-tests
 
-html: 
-	Doxygen Integer.h RunInteger.c++ TestInteger.c++
+html: Doxyfile Integer.h RunInteger.c++ TestInteger.c++
 	doxygen Doxyfile
 
 Integer.log:

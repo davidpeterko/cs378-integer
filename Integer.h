@@ -63,6 +63,11 @@ FI shift_left_digits (II b, II e, int n, FI x) {
     //copy over
     //x = copy(b, e, x);
 
+    if(n == 0){                                             //no shifts, just return a copy of it
+        x = copy(b, e, x);
+        return x;
+    }
+
     while( n > 0){                                          //fill front run with 0s
         *x = 0;                                             //then pick up where x left off 
         ++x;                                                //in the next while loop below
@@ -195,101 +200,91 @@ FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 template <typename II1, typename II2, typename FI>
 FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 
-    //make copies of the iterators?
-    //use b1 e1 b2 e2 to iteratur thru the containers
-    //x to output with forward iterator
-
-
-
-int lengthII1 = e1 - b1;
-int lengthII2 = e2 - b2;
-if (*b2 == 0 && lengthII2 == 1) {
-	while (b1 != e1) {
-            *x = *b1;
-            ++x;
-            ++b1;
-        }
-    }
-else if (lengthII2 > lengthII1) 
-	x = minus_digits(b2, e2, b1, e1, x);
-else {
-	int temp1[20000];
-	int temp2[20000];
-	copy_reverse(b1, e1, temp1);
-	copy_reverse(b2, e2, temp2);
-	int i1 = 0;
-	int i2 = 0;
-	int diff = 0; 
-	int size = 0;
-	int num1 = 0;
-	int num2 = 0;
-	bool zero_remainder = false;
-
-        while (i2 < lengthII2) {
-            num1 += temp1[i1];
-            num2 = temp2[i2];
-            // If the sum of num1 is negative, roll over to 9
-            if (num1 == -1) {
-                num1 = 9;
-                zero_remainder = true;
-            }
-            // If num1 is less than num2 add 10 to num1
-            if (num1 < num2)
-                num1 += 10;
-            diff = num1 - num2;
-            // If the last number diff is 0 don't copy it to x
-            if (diff == 0 && i1 == (lengthII1 - 1)) 
-                --size;
-            else {
-                *x = diff % 10;
+    int lengthII1 = e1 - b1;
+    int lengthII2 = e2 - b2;
+    if (*b2 == 0 && lengthII2 == 1) {
+    	while (b1 != e1) {
+                *x = *b1;
                 ++x;
+                ++b1;
             }
-            // Account for negative diff
-            if (num1 >= 10 || zero_remainder) {
-                num1 = -1;
-                zero_remainder = false;
-            }
-            else 
-                num1 = 0; 
-            ++i1;
-            ++i2;
-            ++size;
         }
-        // Minus extra digits from the first number
-        while (i1 < lengthII1) {
-            num1 += temp1[i1];
-            // If the last number diff is 0 don't copy it to x.
-            if (num1 == 0 && i1 == (lengthII1 - 1)) {
-            }
-            else {
-                *x = num1;
+    else if (lengthII2 > lengthII1) 
+    	x = minus_digits(b2, e2, b1, e1, x);
+    else {
+    	int temp1[20000];
+    	int temp2[20000];
+    	copy_reverse(b1, e1, temp1);
+    	copy_reverse(b2, e2, temp2);
+    	int i1 = 0;
+    	int i2 = 0;
+    	int diff = 0; 
+    	int size = 0;
+    	int num1 = 0;
+    	int num2 = 0;
+    	bool zero_remainder = false;
+
+            while (i2 < lengthII2) {
+                num1 += temp1[i1];
+                num2 = temp2[i2];
+                // If the sum of num1 is negative, roll over to 9
+                if (num1 == -1) {
+                    num1 = 9;
+                    zero_remainder = true;
+                }
+                // If num1 is less than num2 add 10 to num1
+                if (num1 < num2)
+                    num1 += 10;
+                diff = num1 - num2;
+                // If the last number diff is 0 don't copy it to x
+                if (diff == 0 && i1 == (lengthII1 - 1)) 
+                    --size;
+                else {
+                    *x = diff % 10;
+                    ++x;
+                }
+                // Account for negative diff
+                if (num1 >= 10 || zero_remainder) {
+                    num1 = -1;
+                    zero_remainder = false;
+                }
+                else 
+                    num1 = 0; 
+                ++i1;
+                ++i2;
                 ++size;
-                ++x;
-            } 
-            num1 = 0;
-            ++i1;
+            }
+            // Minus extra digits from the first number
+            while (i1 < lengthII1) {
+                num1 += temp1[i1];
+                // If the last number diff is 0 don't copy it to x.
+                if (num1 == 0 && i1 == (lengthII1 - 1)) {
+                }
+                else {
+                    *x = num1;
+                    ++size;
+                    ++x;
+                } 
+                num1 = 0;
+                ++i1;
+            }
+            // The digits are placed into x backwards; reverse list.
+            reverse_num(x - size, x);
         }
-        // The digits are placed into x backwards; reverse list.
-        reverse_num(x - size, x);
-    }
-    return x;}
+    return x;
 
-
-
-
-
-
-    /*
-If both signs are positive, the answer will be positive.
-Example: 14 - (-6) = 14 + 6 = 20
-If both signs are negative, the answer will be negative.
-Example: -14 - (+6) = -14 - 6 = -20
-If the signs are different subtract the smaller absolute value from the larger absolute value. The sign will be the sign of the integer that produced the larger absolute value. 
-Example: 14 - (+6) = 14 - 6 = 8 
-Example: -14 - (-6) = -14 + 6 = -8
-
-
+    /* notes:
+    If both signs are positive, the answer will be positive.
+    Example: 14 - (-6) = 14 + 6 = 20
+    If both signs are negative, the answer will be negative.
+    Example: -14 - (+6) = -14 - 6 = -20
+    If the signs are different subtract the smaller absolute value from the larger absolute value. The sign will be the sign of the integer that produced the larger absolute value. 
+    Example: 14 - (+6) = 14 - 6 = 8 
+    Example: -14 - (-6) = -14 + 6 = -8
     */
+
+
+}
     
 
 // -----------------
@@ -609,6 +604,10 @@ class Integer {
 
         int rsize = rhs._x.size();
 
+        if(rhs.sign == true){                               //outputs the negative if negative
+            lhs << "-"; 
+        }
+
         //output the container of rhs
         for(int i = 0; i < rsize; ++i){
             lhs << rhs._x[i];
@@ -740,13 +739,40 @@ class Integer {
             same for positive, make it a value by value[i] -'0'
 
             */
+            int size = value.size();
 
-            
+            //if "-555"
+            if(value[0] == '-'){
+                _x.resize(size - 1);
+                _x.sign = true;
 
 
+                for(int i = 1; i < size; ++i){
+                    int spot = i - 1;
+                    
+                    if(isdigit(value[i])){
+                        //its a real digit value
+                        _x[spot] = value[i] - '0';
+                    }
+                    else if(!isdigit(value[i])){
+                        throw std::invalid_argument("Not a valid integer digit.");
+                    }    
+                }
+            }
+            else{
+                //means positive string "555"
 
+                for(int i = 0; i < size; ++i){
 
-
+                    if(isdigit(value[i])){
+                        //its a ral digit value
+                        _x[i] = value[i] - '0';
+                    }
+                    else if(!isdigit(value[i])){
+                        throw std::invalid_argument("Not a valid integer digit.");
+                    }
+                }
+            }
 
             if (!valid())
                 throw std::invalid_argument("Integer::Integer()");}
@@ -886,7 +912,13 @@ class Integer {
                 throw std::invalid_argument("RHS cannot be <= 0.");
             }
 
-            
+            if(*this == 0){                     //0 mod x = 0
+                return *this;
+            }
+
+            Integer dividend = *this / rhs;
+
+            Integer mod = *this - dividend * rhs;
 
             return *this;}
 
@@ -899,9 +931,27 @@ class Integer {
          */
         Integer& operator <<= (int n) {
 
-            for(int i = 0; i < n; ++i){
-                *this = *this << 1;
+            int size = this->_x.size();
+            //cout << "This is size: " << size << end;;
+
+            if(n < 0){
+                throw std::invalid_argument("Shift value cannot be < 0.");
             }
+
+            if(n == 0){
+                return *this;
+            }
+
+            if(*this == 0){
+                return *this;
+            }
+
+            //resize container;
+
+            this->_x.resize(size + n);
+
+            //reverse iterate then shift
+            typename C::reverse_iterator it = shift_left_digits(*this->_x.rbegin(), *this->_x.rend(), n, _x.rbegin());
 
             return *this;}
 
@@ -913,10 +963,33 @@ class Integer {
          *  shifts the value this to the right n times
          */
         Integer& operator >>= (int n) {
+            
+            int size = this->_x.size();
+            //cout << "This is size: " << size << end;;
 
-            for(int i = 0; i < n; ++i){
-                *this = *this >> 1;
+            if(n < 0){
+                throw std::invalid_argument("Shift value cannot be < 0.");
             }
+
+            if(n == 0){
+                return *this;
+            }
+
+            if(*this == 0){
+                return *this;
+            }
+
+            if(n > size){                               //shifting more times than the size itself
+                this->_x.clear();                        //empty container
+                this->_x.push_back(0);
+            }
+
+            //resize container;
+
+            this->_x.resize(this->_x.size() - n);
+
+            //reverse iterate then shift
+            typename C::reverse_iterator it = shift_left_digits(*this->_x.rbegin(), *this->_x.rend(), n, _x.rbegin());
 
             return *this;}
 
