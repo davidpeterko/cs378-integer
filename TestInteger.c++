@@ -458,6 +458,38 @@ using namespace std;
 // --
 // %=
 // --
+	TEST(IntegerFixture, mad1){
+                Integer<int> first = 4;
+                Integer<int> second = 2;
+
+                first /= second;
+
+                Integer<int> result = 0;
+
+                ASSERT_EQ(first, result);
+        }
+
+        TEST(IntegerFixture, mad2){
+                Integer<int> first = 45;
+                Integer<int> second = 40;
+
+                first /= second;
+
+                Integer<int> result = 5;
+
+                ASSERT_EQ(first, result);
+        }
+
+        TEST(IntegerFixture, mod3){
+                Integer<int> first = 15;
+                Integer<int> second = 4;
+
+                first = second;
+
+                Integer<int> result = 3;
+
+                ASSERT_EQ(first, result);
+        }
 
 // ---
 // <<=

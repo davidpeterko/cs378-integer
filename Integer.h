@@ -357,8 +357,8 @@ class Integer {
         int rsize = rhs._x.size();
         int lsize = lhs._x.size();
 
-        assert(rsize != 0);
-        assert(lsize != 0);
+       // assert(rsize != 0);
+       // assert(lsize != 0);
 
         //check container sizes
         if(rsize != lsize){
