@@ -31,8 +31,7 @@ using namespace std;
 // shift_left_digits
 // -----------------
 	TEST(IntegerFixture, shift_left_digits1){
-		int first[] = {1, 2, 3, };
-		//int second[] = {1, 2, 3, 0, 0, 0};
+		int first[] = {1, 2, 3};
 
 		int output[10];
 
@@ -41,6 +40,27 @@ using namespace std;
 		//ASSERT_EQ(output, second);
 	}
 
+	TEST(IntegerFixture, shift_left_digits2){
+		int first[] = {1, 2, 3};
+
+		int output[10];
+
+		int* it = shift_left_digits(first, first + 3, 2, output);
+		ASSERT_EQ(5, it - output);
+		//ASSERT_EQ(output, second);
+	}
+
+	TEST(IntegerFixture, shift_left_digits3){
+		int first[] = {1, 2, 3};
+
+		int output[10];
+
+		int* it = shift_left_digits(first, first + 3, 1, output);
+		ASSERT_EQ(4, it - output);
+		//ASSERT_EQ(output, second);
+	}
+
+
 
 // ------------------
 // shift_right_digits
@@ -48,22 +68,152 @@ using namespace std;
 
 	TEST(IntegerFixture, shift_right_digits1){
 		int first[] = {1, 2, 3, 4};
-		//int second[] = {1};
 
-		int output[6];
+		int output[10];
 
 		int* it = shift_right_digits(first, first + 4, 3, output);
 		ASSERT_EQ(1, it - output);
 		//ASSERT_EQ(output, second);
 	}
 
+	TEST(IntegerFixture, shift_right_digits2){
+		int first[] = {1, 2, 3, 4};
+
+		int output[10];
+
+		int* it = shift_right_digits(first, first + 3, 3, output);
+		ASSERT_EQ(1, it - output);
+		//ASSERT_EQ(output, second);
+	}
+
+	TEST(IntegerFixture, shift_right_digits3){
+		int first[] = {1, 2, 3, 4};
+
+		int output[10];
+
+		int* it = shift_right_digits(first, first + 1, 0, output);
+		ASSERT_EQ(1, it - output);
+		//ASSERT_EQ(output, second);
+	}
+
+
+
 // -----------
 // plus_digits
 // -----------
+	TEST(IntegerFixture, plus_digits1){
+		int first[] = {1, 0};
+		int second[] = {1, 2};
+
+		int answer[] = {2, 2};
+
+		int result[10];
+
+		plus_digits(first, first + 2, second, second + 2, result);
+
+		ASSERT_EQ(*result, *answer);
+	}
+
+	TEST(IntegerFixture, plus_digits2){
+		int first[] = {2, 2};
+		int second[] = {1, 2};
+
+		int answer[] = {3, 4};
+
+		int result[10];
+
+		plus_digits(first, first + 2, second, second + 2, result);
+
+		ASSERT_EQ(*result, *answer);
+	}
+
+
+	TEST(IntegerFixture, plus_digits3){
+		int first[] = {6};
+		int second[] = {1, 2};
+
+		int answer[] = {1, 8};
+
+		int result[10];
+
+		plus_digits(first, first + 1, second, second + 2, result);
+
+		ASSERT_EQ(*result, *answer);
+	}
+
+	TEST(IntegerFixture, plus_digits4){
+		int first[] = {5, 1, 9};
+		int second[] = {1, 5, 2};
+
+		int answer[] = {6, 7, 1};
+
+		int result[10];
+
+		plus_digits(first, first+ + 3, second, second + 3, result);
+
+		ASSERT_EQ(*result, *answer);
+	}
+
 
 // ------------
 // minus_digits
 // ------------
+	TEST(IntegerFixture, minus_digits1){
+		int first[] = {1, 4};
+		int second[] = {1, 2};
+
+		int answer[] = {2};
+
+		int result[10];
+
+		minus_digits(first, first + 2, second, second + 2, result);
+
+		ASSERT_EQ(*result, *answer);
+	}
+
+	TEST(IntegerFixture, minus_digits2){
+		int first[] = {2, 2};
+		int second[] = {1, 2};
+
+		int answer[] = {1, 0};
+
+		int result[10];
+
+		minus_digits(first, first + 2, second, second + 2, result);
+
+		ASSERT_EQ(*result, *answer);
+	}
+
+
+	TEST(IntegerFixture, minus_digits3){
+		int first[] = {5, 6, 7};
+		int second[] = {9, 9};
+
+		int answer[] = {4, 6, 8};
+
+		int result[10];
+
+		minus_digits(first, first + 3, second, second + 2, result);
+
+		ASSERT_EQ(*result, *answer);
+	}
+
+	TEST(IntegerFixture, minus_digits4){
+		int first[] = {5, 1, 9};
+		int second[] = {1, 5, 2};
+
+		int answer[] = {6, 7, 1};
+
+		int result[10];
+
+		minus_digits(first, first+ + 3, second, second + 3, result);
+
+		ASSERT_EQ(*result, *answer);
+	}
+
+// ---------------
+// multiply_digits
+// ---------------
 
 // --------------
 // divides_digits
@@ -74,34 +224,30 @@ using namespace std;
 //***********************************//
 
 
-/*
+
 // -------------------
 // integer constructor
 // -------------------
 	TEST(IntegerFixture, constructor1){
-		Integer<int> value("55");
-		//Integer<int> real = 55;
+		Integer<int> value(55);
+		Integer<int> real = 55;
 
-		ASSERT_EQ(value, 55);
+		ASSERT_EQ(value, real);
 	}
 
 	TEST(IntegerFixture, constructor2){
 		Integer<int> value("0");
-		//Integer<int> real = 0;
+		Integer<int> real(0);
 
-		ASSERT_EQ(value, 0);
+		ASSERT_EQ(value, real);
 	}
+
 
 	TEST(IntegerFixture, constructor3){
-		try{
-			Integer<int> value("dddd");
-			ASSERT_TRUE(false);
-		}
-		catch(std::invalid_argument& e){
-			std::cout << e.what() << "bad value" << std::endl;
-		}
+		Integer<int> value("-1");
+
+		ASSERT_EQ(value, -1);
 	}
-*/
 
 // ------
 // negate

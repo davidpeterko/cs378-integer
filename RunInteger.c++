@@ -19,6 +19,20 @@
 
 int main () {
     using namespace std;
+
+
+    Integer<int> value(15);
+
+    cout << value << endl;
+
+    Integer<int> value2("-1");
+
+    cout << value2 << endl;
+
+    Integer<int> value3(2);
+
+    cout << "The value of 2 to the 4: " << pow(value3, 4) << endl;
+    /*
     cout << "RunInteger.c++" << endl << endl;
 
     // less than 300 ms
@@ -33,12 +47,13 @@ int main () {
     const Integer< int, std::deque<int> > n = Integer< int, std::deque<int> >(2).pow(4423) - 1;
     cout << "2^4423 - 1 = " << n << endl << endl;
     }
-
+    */
     // --------------------------
     // extra credit (5 bonus pts)
     // --------------------------
 
     // less than 4 min
+    /*
     cout << "*** 30th Mersenne prime: 39,751 digits ***" << endl << endl;
 
     {
@@ -47,5 +62,7 @@ int main () {
     }
 
     cout << "Done." << endl;
+
+    */
 
     return 0;}

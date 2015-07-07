@@ -304,7 +304,15 @@ FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
  */
 template <typename II1, typename II2, typename FI>
 FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
-    // <your code>
+
+    //copies of b and 2
+
+    
+
+
+
+
+
     return x;}
 
 // --------------
@@ -383,9 +391,7 @@ class Integer {
             ++it_lhs;
         }
 
-        //check if operators equal to end?
-
-        return false;}
+        return true;}
 
     // -----------
     // operator !=
@@ -609,7 +615,7 @@ class Integer {
         }
 
         //output the container of rhs
-        for(int i = 0; i < rsize; ++i){
+        for(int i = rsize-1 ; i >= 0; --i){
             lhs << rhs._x[i];
         }
 
@@ -676,6 +682,7 @@ class Integer {
             sets sign, and pushes it onto container
          */
         Integer (int value) {
+
             size = 0;
 
             if(value > 0){
@@ -683,14 +690,13 @@ class Integer {
             }
             else if(value < 0){
                 sign = true;
-                value = -value;                                     //negate, use the sign atribute to check for negatives
+                value = -value;                                    
             }
 
             if(value == 0){
                 _x.push_back(0);
             }
       
-            //storing the least significant digits first will make it easier to do addition and th eother functions, no need to iterate backwards
             while(value > 0){  
                 int sig_digit = value % 10;
                 _x.push_back(sig_digit);
@@ -708,37 +714,6 @@ class Integer {
          */
         explicit Integer (const std::string& value) {
             //takes in a string, then use that value
-
-            /**
-
-            could use value[i]
-
-            iterate through the string with iterators, a string::const_iterator
-            check if first char is a '-', if so set the sign to true
-            resize to size-1, cause got rid of the negative
-            for loop through the value[] and check if that digit is valid, isdigit, or comparison to a numebr
-            if not a digit, throw invalid argument error
-
-            else if not a negative, then resize the container to the size of the value
-            do the same thing, then convert that part of the string doing - '0' to get it in the container
-
-            else if not digit, throw error
-
-            valid?
-
-            check for value[0] == '-'
-            resize continer to 1 less, cause we set sign flag, and keep the value positive with no sign
-
-            iterate thru the value.size(), and see if it is a digit at i
-
-            if not integer, throw a invalid argument
-            use a coiunter to keep track of number of digits for negative
-
-            container[i-1] = value[i], since we resized
-
-            same for positive, make it a value by value[i] -'0'
-
-            */
             int size = value.size();
 
             //if "-555"
@@ -759,8 +734,8 @@ class Integer {
                     }    
                 }
             }
-            else{
-                //means positive string "555"
+            else{//positive
+                _x.resize(size);
 
                 for(int i = 0; i < size; ++i){
 
@@ -858,6 +833,7 @@ class Integer {
             //result need to be big enough
 
 
+
             return *this;}
 
         // -----------
@@ -926,9 +902,9 @@ class Integer {
                 return *this;
             }
 
-            Integer dividend = *this / rhs;
+            //Integer dividend = *this / rhs;
 
-            Integer mod = *this - dividend * rhs;
+            //Integer mod = *this - dividend * rhs;
 
             return *this;}
 
@@ -960,7 +936,7 @@ class Integer {
 
             this->_x.resize(size + n);
 
-            //reverse iterate then shift
+            //shift here
 
             return *this;}
 
@@ -997,8 +973,8 @@ class Integer {
 
             this->_x.resize(this->_x.size() - n);
 
-            //reverse iterate then shift
-            
+            //shift here
+
             return *this;}
 
         // ---
@@ -1038,7 +1014,8 @@ class Integer {
                 throw std::invalid_argument("Received e < 0");
             }
 
-            //the code should be more complex to handle bigger values of e
+
+
 
             return *this;}};
 
