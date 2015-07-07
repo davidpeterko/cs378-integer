@@ -727,6 +727,18 @@ class Integer {
 
             valid?
 
+            check for value[0] == '-'
+            resize continer to 1 less, cause we set sign flag, and keep the value positive with no sign
+
+            iterate thru the value.size(), and see if it is a digit at i
+
+            if not integer, throw a invalid argument
+            use a coiunter to keep track of number of digits for negative
+
+            container[i-1] = value[i], since we resized
+
+            same for positive, make it a value by value[i] -'0'
+
             */
 
             
