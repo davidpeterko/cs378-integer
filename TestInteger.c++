@@ -496,29 +496,28 @@ using namespace std;
 // ---
 	TEST(IntegerFixture, shift_left_equal1){
                 Integer<int> first = 9;
-                first <<= 0;
-
                 Integer<int> result = 9;
 
+		first <<=0;
+
                 ASSERT_EQ(first, result);
         }
 
-	TEST(IntegerFixture, shift_left_equal2){
-                Integer<int> first = 50;
+	TEST(IntegerFixture, shift_left_equal1){
+                Integer<int> first = 999;
+                Integer<int> result = 999000;
+                
+                first <<=3;
 
-                first <<= 1;
-            
-                Integer<int> result =500;
-            
                 ASSERT_EQ(first, result);
         }
-
-	TEST(IntegerFixture, shift_left_equal3){
+	
+	TEST(IntegerFixture, shift_left_equal1){
                 Integer<int> first = 9999;
-                first <<= 5;
-            
-                Integer<int> result = 999900000;
-            
+                Integer<int> result = 999900000000;
+                
+                first <<=8;
+
                 ASSERT_EQ(first, result);
         }
 
