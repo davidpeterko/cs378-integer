@@ -20,6 +20,20 @@
 int main () {
     using namespace std;
 
+    int first[] = {6, 8};
+    int second[] = {2, 2};
+
+    int answer[10];
+
+    for(int i = 0 ; i < 10; i++){
+        answer[i] = 0;
+    }
+
+    int* p = multiplies_digits(first, first + 2, second, second + 2, answer);
+
+    for(int i = 0; i < 10; i++){
+        cout << answer[i] << " ";
+    }
 
     cout << endl;
     /*

@@ -356,23 +356,23 @@ using namespace std;
 // -------------
 	TEST(IntegerFixture, preincre1){
 		Integer<int> temp = 1;
-		Integer<int> result = ++temp;
+		++temp;
 
-		ASSERT_EQ(2, result);
+		ASSERT_EQ(12, temp);
 	}
 
 	TEST(IntegerFixture, preincre2){
 		Integer<int> temp = 100;
-		Integer<int> result = ++temp;
+		++temp;
 
-		ASSERT_EQ(101, result);
+		ASSERT_EQ(101, temp);
 	}
 
 	TEST(IntegerFixture, preincre3){
 		Integer<int> temp = 0;
-		Integer<int> result = ++temp;
+		++temp;
 
-		ASSERT_EQ(1, result);
+		ASSERT_EQ(1, temp);
 	}
 
 // --------------
@@ -451,25 +451,27 @@ using namespace std;
 // equals
 // ------
 	TEST(IntegerFixture, equals1){
-		const Integer<int> first = 55;
-		const Integer<int> second = 55;
+		Integer<int> first = 55;
+		Integer<int> second = 55;
 
 		ASSERT_EQ(first, second);
 	}
 
 	TEST(IntegerFixture, equals2){
-		const Integer<int> first = -44;
-		const Integer<int> second = -44;
+		Integer<int> first = -44;
+		Integer<int> second = -44;
 
 		ASSERT_EQ(first, second);
 	}
 
 	TEST(IntegerFixture, equals3){
-		const Integer<int> first = 1;
-		const Integer<int> second = 1;
+		Integer<int> first = 1;
+		Integer<int> second = 1;
 
 		ASSERT_EQ(first, second);
 	}
+
+
 
 // --
 // +=
@@ -480,7 +482,7 @@ using namespace std;
 
 		first += second;
 
-		const Integer<int> result = 3;
+		Integer<int> result = 3;
 
 		ASSERT_EQ(first, result);
 	}
@@ -491,7 +493,7 @@ using namespace std;
 
 		first += second;
 
-		const Integer<int> result = 15;
+		Integer<int> result = 15;
 
 		ASSERT_EQ(first, result);
 	}
@@ -502,7 +504,7 @@ using namespace std;
 
 		first += second;
 
-		const Integer<int> result = 150;
+		Integer<int> result = 150;
 
 		ASSERT_EQ(first, result);
 	}
@@ -516,7 +518,7 @@ using namespace std;
 
 		first -= second;
 
-		const Integer<int> result = 5;
+		Integer<int> result = 5;
 
 		ASSERT_EQ(first, result);
 	}
@@ -527,7 +529,7 @@ using namespace std;
 
 		first -= second;
 
-		const Integer<int> result = 1;
+		Integer<int> result = 1;
 
 		ASSERT_EQ(first, result);
 	}
@@ -538,10 +540,12 @@ using namespace std;
 
 		first -= second;
 
-		const Integer<int> result = -50;
+		Integer<int> result = -50;
 
 		ASSERT_EQ(first, result);
 	}
+
+	
 
 // -
 // <
@@ -550,23 +554,24 @@ using namespace std;
 		Integer<int> first = 50;
 		Integer<int> second = 50;
 
-		ASSERT_FALSE(first < second);
+		ASSERT_EQ(false, (first < second));
 	}
 
 	TEST(IntegerFixture, less2){
 		Integer<int> first = 1;
 		Integer<int> second = 2;
 
-		ASSERT_TRUE(first < second);
+		ASSERT_EQ(true, (first < second));
 	}
 
 	TEST(IntegerFixture, less3){
 		Integer<int> first = 2;
 		Integer<int> second = 1;
 
-		ASSERT_FALSE(first < second);
+		ASSERT_EQ(false, (first < second));
 	}
 
+	
 // -
 // >
 // - 
@@ -590,6 +595,8 @@ using namespace std;
 
 		ASSERT_TRUE(first > second);
 	}
+
+
 
 // --
 // *=
@@ -653,12 +660,12 @@ using namespace std;
 	}
 
 	TEST(IntegerFixture, div3){
-		Integer<int> first = 15;
-		Integer<int> second = 3;
+		Integer<int> first = 1;
+		Integer<int> second = 1;
 
 		first /= second;
 
-		Integer<int> result = 5;
+		Integer<int> result = 1;
 
 		ASSERT_EQ(first, result);
 	}

@@ -327,11 +327,12 @@ FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
         ++b2;
     }
 
-   result.resize(num1.size() + num2.size());
    //int digit_counter = 0;
+    result.resize(num1.size() + num2.size());
 
    // reverse(num1.begin(), num1.end());
     //reverse(num2.begin(), num2.end());
+    int num_digits = 0;
 
     for(int i = 0; i < (int)num1.size(); i++){
 
@@ -344,13 +345,17 @@ FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 
             carry = temp/10;
             result[k] = temp%10;
+            num_digits++;
             k++;
         }
 
         if(carry != 0){
             result[k] = carry;
+            num_digits++;
         }
     }
+
+    result.resize(num_digits);
 
     /*
     // Copy from our temp container to the result
@@ -363,7 +368,7 @@ FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
     
     for(int i = 0; (int)i < result.size(); i++){
         *x = result[i];
-       // cout << "This value is *x: " << *x << endl;
+        cout << "This value is *x: " << *x << endl;
         ++x;
     }
     
@@ -957,10 +962,6 @@ class Integer {
             if(*this == 0){                     //0 mod x = 0
                 return *this;
             }
-
-            //Integer dividend = *this / rhs;
-
-            //Integer mod = *this - dividend * rhs;
 
             return *this;}
 
