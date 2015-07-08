@@ -21,17 +21,7 @@ int main () {
     using namespace std;
 
 
-    Integer<int> value(15);
-
-    cout << value << endl;
-
-    Integer<int> value2("-1");
-
-    cout << value2 << endl;
-
-    Integer<int> value3(2);
-
-    cout << "The value of 2 to the 4: " << pow(value3, 4) << endl;
+    cout << endl;
     /*
     cout << "RunInteger.c++" << endl << endl;
 

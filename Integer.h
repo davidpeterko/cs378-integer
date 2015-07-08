@@ -166,6 +166,7 @@ FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
                 --lengthII1;
                 sum += *(b1 + lengthII1);
                 *x = sum % 10;
+               // cout << *x << endl;
                 sum /= 10;
                 ++x;
                 ++size;
@@ -173,12 +174,15 @@ FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
             // Add left over remainder.
             if (sum != 0) {
                 *x = sum;
+               // cout << *x << endl;
                 ++x;
                 ++size;
             }
             // The digits are placed into x backwards; reverse list.
             reverse_num(x - size, x);
         }
+
+
 
     return x;}
 
@@ -241,6 +245,7 @@ FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
                     --size;
                 else {
                     *x = diff % 10;
+                    //cout << *x << endl;
                     ++x;
                 }
                 // Account for negative diff
@@ -262,6 +267,7 @@ FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
                 }
                 else {
                     *x = num1;
+                    //cout << *x << endl;
                     ++size;
                     ++x;
                 } 
@@ -306,13 +312,62 @@ template <typename II1, typename II2, typename FI>
 FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 
     //copies of b and 2
+    vector<int> num1;
+    vector<int> num2;
+    vector<int> result;
 
+
+    while(b1 != e1){
+        num1.push_back(*b1);
+        ++b1;
+    }
+
+    while(b2 != e2){
+        num2.push_back(*b2);
+        ++b2;
+    }
+
+   result.resize(num1.size() + num2.size());
+   //int digit_counter = 0;
+
+   // reverse(num1.begin(), num1.end());
+    //reverse(num2.begin(), num2.end());
+
+    for(int i = 0; i < (int)num1.size(); i++){
+
+        int carry = 0;
+        int k = i;
+
+        for(int j = 0; j < (int)num2.size(); j++){
+
+            int temp = (num1[i])*(num2[j]) + carry + result[k];
+
+            carry = temp/10;
+            result[k] = temp%10;
+            k++;
+        }
+
+        if(carry != 0){
+            result[k] = carry;
+        }
+    }
+
+    /*
+    // Copy from our temp container to the result
+    for (int i = (int)result.size()-1; i >= 0; i--)
+    {
+        *x = result[i];
+        ++x;
+    }
+    */
     
-
-
-
-
-
+    for(int i = 0; (int)i < result.size(); i++){
+        *x = result[i];
+       // cout << "This value is *x: " << *x << endl;
+        ++x;
+    }
+    
+    
     return x;}
 
 // --------------
@@ -694,7 +749,9 @@ class Integer {
             }
 
             if(value == 0){
+                sign = false;
                 _x.push_back(0);
+                ++size;
             }
       
             while(value > 0){  
@@ -736,7 +793,7 @@ class Integer {
             }
             else{//positive
                 _x.resize(size);
-
+                sign = false;
                 for(int i = 0; i < size; ++i){
 
                     if(isdigit(value[i])){
@@ -844,7 +901,6 @@ class Integer {
          * subtract rhs from the value
          */
         Integer& operator -= (const Integer& rhs) {
-
 
 
 
