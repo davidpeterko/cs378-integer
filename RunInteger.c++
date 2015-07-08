@@ -20,22 +20,6 @@
 int main () {
     using namespace std;
 
-    int first[] = {6, 8};
-    int second[] = {2, 2};
-
-    int answer[10];
-
-    for(int i = 0 ; i < 10; i++){
-        answer[i] = 0;
-    }
-
-    int* p = multiplies_digits(first, first + 2, second, second + 2, answer);
-
-    for(int i = 0; i < 10; i++){
-        cout << answer[i] << " ";
-    }
-
-    cout << endl;
     /*
     cout << "RunInteger.c++" << endl << endl;
 
@@ -51,13 +35,13 @@ int main () {
     const Integer< int, std::deque<int> > n = Integer< int, std::deque<int> >(2).pow(4423) - 1;
     cout << "2^4423 - 1 = " << n << endl << endl;
     }
-    */
+    
     // --------------------------
     // extra credit (5 bonus pts)
     // --------------------------
 
     // less than 4 min
-    /*
+    
     cout << "*** 30th Mersenne prime: 39,751 digits ***" << endl << endl;
 
     {
@@ -67,6 +51,6 @@ int main () {
 
     cout << "Done." << endl;
 
-    */
+    */    
 
     return 0;}
