@@ -299,22 +299,7 @@ FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 template <typename II1, typename II2, typename FI>
 FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 
-    //copies of b and 2
-    vector<int> num1;
-    vector<int> num2;
-    vector<int> result;
-
-
-    while(b1 != e1){
-        num1.push_back(*b1);
-        ++b1;
-    }
-
-    while(b2 != e2){
-        num2.push_back(*b2);
-        ++b2;
-    }
-
+    /*
    //int digit_counter = 0;
     result.resize(num1.size() + num2.size());
 
@@ -354,11 +339,32 @@ FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
     }
     */
     
+    /*
     for(int i = 0; (int)i < result.size(); i++){
         *x = result[i];
         //cout << "This value is *x: " << *x << endl;
         ++x;
     }
+
+    */
+
+    vector<int> num1;
+    vector<int> num2;
+    vector<int> result;
+
+
+    while(b1 != e1){
+        num1.push_back(*b1);
+        ++b1;
+    }
+
+    while(b2 != e2){
+        num2.push_back(*b2);
+        ++b2;
+    }
+
+    //here we have the num1 and num2
+    
     
     
     return x;}
@@ -380,7 +386,9 @@ FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
  */
 template <typename II1, typename II2, typename FI>
 FI divides_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
-    // <your code>
+
+
+
     return x;}
 
 
@@ -947,6 +955,7 @@ class Integer {
          */
         Integer& operator -= (const Integer& rhs) {
 
+            /*
             C newresult(this->size + rhs.size);
 
             if(this->sign != rhs.sign){
@@ -1013,6 +1022,27 @@ class Integer {
             }
 
             this->_x = newresult;
+            */
+
+
+            C newresult(this->size + rhs.size);
+
+            typename C::iterator it;
+
+            if(this->sign == rhs.sign){
+                //equals signs
+
+            }
+
+            else if(this->sign != rhs.sign){
+                //opposite signs
+
+            }
+
+            int res_size = it - newresult.begin();
+            this->size = res_size;
+            this->_x = newresult;
+            this->_x.resize(res_size);
 
             return *this;
 
@@ -1052,23 +1082,20 @@ Example: -14 - (-6) = -14 + 6 = -8
             if(this->sign == true && rhs.sign == true){
                 //multiplying 2 negatives
                 it = multiplies_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-                newresult.sign = false;
             }
             else if(this->sign == false && rhs.sign == false){
                 //multiplying 2 positives
                 it = multiplies_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-                newresult.sign = false;               
             }
 
             else if(this->sign != rhs.sign){
                 //pos and neg OR neg and pos multi, sign ends up negative
                 it = multiplies_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-                newresult.sign = true;
             }
 
             int res_size = it - newresult.begin();
             this->size = res_size;
-            this->_x = newresult._x;
+            this->_x = newresult;
             this->_x.resize(res_size);
 
             return *this;}
@@ -1154,8 +1181,7 @@ Example: -14 - (-6) = -14 + 6 = -8
             multiplied.resize(mult_size);
 
             C newresult(this->size + multiplied.size);
-            typename C::iterator minus = minus_digits(this->_x.begin(), this->_x.end(), multipli
-                ed._x.end(), multiplied._x.end(), newresult.begin());
+            typename C::iterator minus = minus_digits(this->_x.begin(), this->_x.end(), multiplied._x.end(), multiplied._x.end(), newresult.begin());
             int res_size = minus - newresult.begin();
 
             this->size = res_size;
@@ -1279,6 +1305,12 @@ Example: -14 - (-6) = -14 + 6 = -8
 
             if(e < 0){
                 throw std::invalid_argument("Received e < 0");
+            }
+
+
+
+            if(e == 0){
+
             }
 
 

@@ -254,6 +254,22 @@ using namespace std;
 		ASSERT_EQ(*(answer+2), *(result+2));
 	}
 
+
+	TEST(IntegerFixture, minus_digits5){
+		int first[] = {1, 0, 0};
+		int second[] = {5, 0};
+
+		int answer[] = {5, 0};
+
+		int result[10];
+
+		int* p = minus_digits(first, first + 3, second, second + 2, result);
+
+		ASSERT_EQ(2, p - result);
+		ASSERT_EQ(*(answer), *(result));
+		ASSERT_EQ(*(answer+1), *(result+1));
+	}
+
 // ---------------
 // multiply_digits
 // ---------------
@@ -547,7 +563,7 @@ using namespace std;
 		ASSERT_EQ(first, 8);
 	}
 	
-/*
+
 
 // --
 // -=
@@ -575,18 +591,18 @@ using namespace std;
 	}
 
 	TEST(IntegerFixture, minusequals3){
-		Integer<int> first = 150;
+		Integer<int> first = 200;
 		Integer<int> second = 100;
 
 		first -= second;
 
-		Integer<int> result = 50;
+		Integer<int> result = 100;
 
 		ASSERT_EQ(first, result);
 	}
 
 	
-
+/*
 // -
 // <
 // -
@@ -637,6 +653,7 @@ using namespace std;
 		ASSERT_TRUE(first > second);
 	}
 
+*/
 
 // --
 // *=
@@ -649,7 +666,7 @@ using namespace std;
 
 		Integer<int> result = 12;
 
-		ASSERT_EQ(first, 4);
+		ASSERT_EQ(first, 12);
 	}
 
 	TEST(IntegerFixture, mult2){
@@ -671,9 +688,10 @@ using namespace std;
 
 		Integer<int> result = 45;
 
-		ASSERT_EQ(first, 15);
+		ASSERT_EQ(first, 45);
 	}
-	
+
+/*
 
 // --
 // /=

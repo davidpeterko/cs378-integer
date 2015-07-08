@@ -27,7 +27,9 @@ int main () {
 
     //first = first % second;
 
-    cout << "The value of 10 %= 7 should be 3 and we got: " << first << endl;
+    first *= second;
+
+    cout << "The value of first _= second is 3 and we got: " << first << endl;
 
     /*
     cout << "RunInteger.c++" << endl << endl;
