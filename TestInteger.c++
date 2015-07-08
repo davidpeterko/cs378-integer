@@ -265,8 +265,9 @@ using namespace std;
 
 		int result[10];
 
-		multiplies_digits(first, first + 2, second, second + 1, result);
+		int* p = multiplies_digits(first, first + 2, second, second + 1, result);
 
+		//ASSERT_EQ(2, p - result);
 		ASSERT_EQ(*answer, *result);
 		ASSERT_EQ(*(result+1), *(answer+1));
 	}
@@ -279,12 +280,30 @@ using namespace std;
 
 		int result[10];
 
-		multiplies_digits(first, first + 2, second, second + 2, result);
+		int* p = multiplies_digits(first, first + 2, second, second + 2, result);
 
+		//ASSERT_EQ(3, p - result);
 		ASSERT_EQ(*answer, *result);
 		ASSERT_EQ(*(result+1), *(answer+1));
 		ASSERT_EQ(*(result+2), *(answer+2));
 	}
+
+
+	TEST(IntegerFixture, multiply_digits3){
+		int first[] = {9};
+		int second[] = {2};
+
+		int answer[] {8, 1};
+
+		int result[10];
+
+		int* p = multiplies_digits(first, first + 1, second, second + 1, result);
+
+		//ASSERT_EQ(2, p - result);
+		ASSERT_EQ(*answer, *result);
+		ASSERT_EQ(*(result+1), *(answer+1));
+	}
+
 
 // --------------
 // divides_digits
@@ -692,20 +711,18 @@ using namespace std;
 		ASSERT_EQ(first, result);
 	}
 	
-
-
+*/
+/*
 // --
 // %=
 // --
 	TEST(IntegerFixture, mod1){
-                Integer<int> first = 4;
+                Integer<int> first = 0;
                 Integer<int> second = 2;
 
                 first %= second;
 
-                Integer<int> result = 0;
-
-                ASSERT_EQ(first, result);
+                ASSERT_EQ(first, 0);
         }
 
         TEST(IntegerFixture, mod2){
@@ -714,9 +731,7 @@ using namespace std;
 
                 first %= second;
 
-                Integer<int> result = 5;
-
-                ASSERT_EQ(first, result);
+                ASSERT_EQ(first, 5);
         }
 
         TEST(IntegerFixture, mod3){
@@ -725,12 +740,10 @@ using namespace std;
 
                 first %= second;
 
-                Integer<int> result = 3;
-
-                ASSERT_EQ(first, result);
+                ASSERT_EQ(first, 3);
         }
-       */
-
+       
+*/
 // ---
 // <<=
 // ---

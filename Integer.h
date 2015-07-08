@@ -1040,11 +1040,36 @@ Example: -14 - (-6) = -14 + 6 = -8
          */
         Integer& operator *= (const Integer& rhs) {
 
-            //check signs
-            //negative * negative, should be positive, so this->sign shoudl be false;
-            //if rhs->sign is negative, then this is positive, so this->true
+            C newresult(this->size + rhs.size);
 
-            //make your iterators, then call multiplies digits, thenr esize your container 
+            if(*this == 0 || rhs == 0){
+                return *this;
+            }
+
+            typename C::iterator it;
+
+
+            if(this->sign == true && rhs.sign == true){
+                //multiplying 2 negatives
+                it = multiplies_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
+                newresult.sign = false;
+            }
+            else if(this->sign == false && rhs.sign == false){
+                //multiplying 2 positives
+                it = multiplies_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
+                newresult.sign = false;               
+            }
+
+            else if(this->sign != rhs.sign){
+                //pos and neg OR neg and pos multi, sign ends up negative
+                it = multiplies_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
+                newresult.sign = true;
+            }
+
+            int res_size = it - newresult.begin();
+            this->size = res_size;
+            this->_x = newresult._x;
+            this->_x.resize(res_size);
 
             return *this;}
 
@@ -1058,9 +1083,36 @@ Example: -14 - (-6) = -14 + 6 = -8
          */
         Integer& operator /= (const Integer& rhs) {
 
+            C newresult(this->size + rhs.size);
+
             if(rhs == 0){
                 throw std::invalid_argument("Cannot divide by zero.");
             }
+
+            typename C::iterator it;
+
+
+            if(this->sign == true && rhs.sign == true){
+                //dividing 2 negatives
+                it = divides_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
+                newresult.sign = false;
+            }
+            else if(this->sign == false && rhs.sign == false){
+                //dividing 2 positives
+                it = divides_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
+                newresult.sign = false;               
+            }
+
+            else if(this->sign != rhs.sign){
+                //pos and neg OR neg and pos div, sign ends up negative
+                it = divides_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
+                newresult.sign = true;
+            }
+
+            int res_size = it - newresult.begin();
+            this->size = res_size;
+            this->_x = newresult._x;
+            this->_x.resize(res_size);
 
             return *this;}
 
@@ -1082,6 +1134,34 @@ Example: -14 - (-6) = -14 + 6 = -8
                 return *this;
             }
 
+            //C newresult(this->size + rhs.size);
+            C dividend(this->size + rhs.size);
+
+            //zero case
+            if(*this == 0){
+                return *this;
+            }
+
+            typename C::iterator div = divides_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), dividend.begin());
+            int div_size = div - dividend.begin();
+            dividend.resize(div_size);
+
+            //here we have the dividend
+            C multiplied(dividend.size + rhs.size);
+
+            typename C::iterator mult = multiplies_digits(dividend._x.begin(), dividend._x.end(), rhs._x.end(), rhs._x.end(), multiplied.begin());
+            int mult_size = mult - multiplied.begin();
+            multiplied.resize(mult_size);
+
+            C newresult(this->size + multiplied.size);
+            typename C::iterator minus = minus_digits(this->_x.begin(), this->_x.end(), multipli
+                ed._x.end(), multiplied._x.end(), newresult.begin());
+            int res_size = minus - newresult.begin();
+
+            this->size = res_size;
+            this->_x = newresult._x;
+            this->_x.resize(res_size);
+    
             return *this;}
 
         // ------------

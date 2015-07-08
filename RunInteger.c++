@@ -20,6 +20,15 @@
 int main () {
     using namespace std;
 
+    cout << "testing to see if shit happens." << endl;
+
+    Integer<int> first(10);
+    Integer<int> second(7);
+
+    //first = first % second;
+
+    cout << "The value of 10 %= 7 should be 3 and we got: " << first << endl;
+
     /*
     cout << "RunInteger.c++" << endl << endl;
 
