@@ -20,17 +20,6 @@
 int main () {
     using namespace std;
 
-    cout << "testing to see if shit happens." << endl;
-
-    Integer<int> first(86);
-    Integer<int> second(86);
-
-    //first = first % second;
-
-    first *= second;
-
-    cout << "The value of first _= second is 3 and we got: " << first << endl;
-
     /*
     cout << "RunInteger.c++" << endl << endl;
 
@@ -61,7 +50,6 @@ int main () {
     }
 
     cout << "Done." << endl;
-
-    */    
+    */
 
     return 0;}

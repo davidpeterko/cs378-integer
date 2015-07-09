@@ -711,7 +711,7 @@ class Integer {
         C _x; // the backing container
         bool sign;  //if this is true, then the value is negative
         int size;    //size of container
-
+        bool positive;
 
     private:
         // -----
@@ -948,111 +948,29 @@ class Integer {
          * subtract rhs from the value
          */
         Integer& operator -= (const Integer& rhs) {
+           
+            Integer why = rhs;
+            if(!this->positive && why.positive){
+                this->positive = true;
+                *this += why;
+                this->positive = false;
+                return *this;
+            }else if(this->positive && !why.positive){
+                *this += why;
+                return *this;
+            }else{
 
-            /*
-            C newresult(this->size + rhs.size);
-
-            if(this->sign != rhs.sign){
-                //if the abs are the same, the result should be 0
-
-                typename C::iterator it;
-
-                if(this->sign == true && rhs.sign == false){
-                    //negative MINUS a positive
-
-                    it = plus_digits(rhs._x.begin(), rhs._x.begin(), this->_x.begin(), this->_x.end(), newresult.begin());
-                    this->sign = true;
-                }
-
-                if(this->sign == false && rhs.sign == true){
-                    //a positive MINUS a negative
-
-                    it = plus_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.begin(), newresult.begin());
-                    this->sign = false;
-                }
-
-                this->size = it - newresult.begin();
-                newresult.resize(this->size);
+                auto b = false;
+                if(!this->positive && !why.positive){ this->positive = true; why.positive = true; b = true; }
+                Integer tmp = 0;
+                tmp._x.resize(this->_x.size() + why._x.size());
+                auto v = minus_digits(this->_x.begin(), this->_x.end(), why._x.begin(), why._x.end(), tmp._x.begin());
+                tmp._x.resize(distance(tmp._x.begin(), v));
+                *this = tmp;
+                if(b){this->positive = false;}
+                return *this;
             }
 
-            else if(this->sign == rhs.sign){
-                
-                typename C::iterator it2;
-
-                if(this->sign == false && this->sign == false){
-                    //positive minus a positive
-                    //both positive 
-
-
-                    if(*this > rhs){
-
-                        it2 = minus_digits(rhs._x.begin(), rhs._x.begin(), this->_x.begin(), this->_x.end(), newresult.begin());
-                        this->sign = false;
-                    }
-                    else if(*this < rhs){
-
-                        cout << " we get inside this comparator *this < rhs " << endl;
-                        it2 = minus_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.begin(), newresult.begin());
-                        this->sign = true;
-                    }
-                }
-
-                if(this->sign == true && rhs.sign == true){
-                    //negative minus a negative
-                    //boht engative
-
-                    if(*this > rhs){
-                        it2 = minus_digits(rhs._x.begin(), rhs._x.begin(), this->_x.begin(), this->_x.end(), newresult.begin());
-                        this->sign = true;
-                    }
-                    else if(*this < rhs){
-                        it2 = minus_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.begin(), newresult.begin());
-                        this->sign = false;
-                    }
-                }
-
-                this->size = it2 - newresult.begin();
-                newresult.resize(this->size);
-            }
-
-            this->_x = newresult;
-            */
-
-
-            C newresult(this->size + rhs.size);
-
-            typename C::iterator it;
-
-            if(this->sign == rhs.sign){
-                //equals signs
-
-            }
-
-            else if(this->sign != rhs.sign){
-                //opposite signs
-
-            }
-
-            int res_size = it - newresult.begin();
-            this->size = res_size;
-            this->_x = newresult;
-            this->_x.resize(res_size);
-
-            return *this;
-
-            /*
-
-In case anyone is struggling with subtraction, I found this plain english description that I found to be very helpful for constructing the algorithm:
-If both signs are positive, the answer will be positive.
-Example: 14 - (-6) = 14 + 6 = 20
-If both signs are negative, the answer will be negative.
-Example: -14 - (+6) = -14 - 6 = -20
-If the signs are different subtract the smaller absolute value from the larger absolute value. The sign will be the sign of the integer that produced the larger absolute value. 
-Example: 14 - (+6) = 14 - 6 = 8 
-Example: -14 - (-6) = -14 + 6 = -8
-
-            */
-            //return *this;}
         }
 
         // -----------
@@ -1155,6 +1073,7 @@ Example: -14 - (-6) = -14 + 6 = -8
                 return *this;
             }
 
+            /*
             //C newresult(this->size + rhs.size);
             C dividend(this->size + rhs.size);
 
@@ -1181,7 +1100,8 @@ Example: -14 - (-6) = -14 + 6 = -8
             this->size = res_size;
             this->_x = newresult._x;
             this->_x.resize(res_size);
-    
+            */
+
             return *this;}
 
         // ------------
