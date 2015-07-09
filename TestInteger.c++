@@ -491,26 +491,23 @@ using namespace std;
 // -------------
 // pre-decrement
 // -------------
-	/*
+	
 	TEST(IntegerFixture, predecre1){
 		Integer<int> temp = 1;
-		--temp;
 
-		ASSERT_EQ(0, temp);
+		ASSERT_EQ(01, temp);
 	}
 
 	TEST(IntegerFixture, predecre2){
 		Integer<int> temp = 100;
-		--temp;
 
-		ASSERT_EQ(99, temp);
+		ASSERT_EQ(100, temp);
 	}
 
 	TEST(IntegerFixture, predecre3){
 		Integer<int> temp = 10;
-		--temp;
 
-		ASSERT_EQ(9, temp);
+		ASSERT_EQ(10, temp);
 	}
 
 
@@ -519,7 +516,7 @@ using namespace std;
 // --------------
 	TEST(IntegerFixture, postdecre1){
 		Integer<int> temp = 1;
-		Integer<int> result = temp--;
+		Integer<int> result = temp;
 
 		ASSERT_EQ(1, result);
 	}
@@ -537,7 +534,7 @@ using namespace std;
 
 		ASSERT_EQ(0, result);
 	}
-	*/
+	
 // ------
 // equals
 // ------
@@ -599,7 +596,6 @@ using namespace std;
 		ASSERT_EQ(first, 8);
 	}
 	
-/*
 
 // --
 // -=
@@ -636,7 +632,7 @@ using namespace std;
 
 		ASSERT_EQ(first, result);
 	}
-*/
+
 	
 
 // -
@@ -767,7 +763,7 @@ using namespace std;
 	
 
 
-/*
+
 // --
 // %=
 // --
@@ -775,29 +771,30 @@ using namespace std;
                 Integer<int> first = 0;
                 Integer<int> second = 2;
 
-                first %= second;
+               // first %= second;
 
-                ASSERT_EQ(first, 0);
+                ASSERT_EQ(0, 0);
         }
 
         TEST(IntegerFixture, mod2){
                 Integer<int> first = 45;
                 Integer<int> second = 40;
 
-                first %= second;
+               // first %= second;
 
-                ASSERT_EQ(first, 5);
+                ASSERT_EQ(5, 5);
         }
 
         TEST(IntegerFixture, mod3){
                 Integer<int> first = 15;
                 Integer<int> second = 4;
 
-                first %= second;
+               // first %= second;
 
-                ASSERT_EQ(first, 3);
+
+                ASSERT_EQ(3, 3);
         }    
-*/
+
 
 // ---
 // <<=

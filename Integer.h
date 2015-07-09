@@ -733,6 +733,8 @@ class Integer {
          */
         Integer (int value) {
 
+            value < 0 ? positive = false: positive = true;
+
             size = 0;
 
             if(value > 0){
