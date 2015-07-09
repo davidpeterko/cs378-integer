@@ -45,7 +45,7 @@ clean:
 config:
 	git config -l
 
-test: RunInteger.out TestInteger.out
+test: TestInteger.out
 
 integer-tests:
 	git clone https://github.com/cs378-summer-2015/integer-tests

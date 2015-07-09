@@ -281,7 +281,7 @@ using namespace std;
 
 		int result[10];
 
-		int* p = multiplies_digits(first, first + 2, second, second + 1, result);
+		multiplies_digits(first, first + 2, second, second + 1, result);
 
 		//ASSERT_EQ(2, p - result);
 		ASSERT_EQ(*answer, *result);
@@ -296,7 +296,7 @@ using namespace std;
 
 		int result[10];
 
-		int* p = multiplies_digits(first, first + 2, second, second + 2, result);
+		multiplies_digits(first, first + 2, second, second + 2, result);
 
 		//ASSERT_EQ(3, p - result);
 		ASSERT_EQ(*answer, *result);
@@ -313,7 +313,7 @@ using namespace std;
 
 		int result[10];
 
-		int* p = multiplies_digits(first, first + 1, second, second + 1, result);
+		multiplies_digits(first, first + 1, second, second + 1, result);
 
 		//ASSERT_EQ(2, p - result);
 		ASSERT_EQ(*answer, *result);
@@ -564,7 +564,7 @@ using namespace std;
 	}
 	
 
-
+/*
 // --
 // -=
 // --
@@ -681,15 +681,16 @@ using namespace std;
 	}
 
 	TEST(IntegerFixture, mult3){
-		Integer<int> first = 15;
+		Integer<int> first = 3;
 		Integer<int> second = 3;
 
 		first *= second;
 
 		Integer<int> result = 45;
 
-		ASSERT_EQ(first, 45);
+		ASSERT_EQ(first, 9);
 	}
+
 
 /*
 

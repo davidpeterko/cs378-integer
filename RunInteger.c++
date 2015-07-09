@@ -22,8 +22,8 @@ int main () {
 
     cout << "testing to see if shit happens." << endl;
 
-    Integer<int> first(10);
-    Integer<int> second(7);
+    Integer<int> first(86);
+    Integer<int> second(86);
 
     //first = first % second;
 

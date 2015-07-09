@@ -298,8 +298,22 @@ FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
  */
 template <typename II1, typename II2, typename FI>
 FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
+    
+    vector<int> num1;
+    vector<int> num2;
+    vector<int> result;
 
-    /*
+
+    while(b1 != e1){
+        num1.push_back(*b1);
+        ++b1;
+    }
+
+    while(b2 != e2){
+        num2.push_back(*b2);
+        ++b2;
+    }
+
    //int digit_counter = 0;
     result.resize(num1.size() + num2.size());
 
@@ -339,34 +353,14 @@ FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
     }
     */
     
-    /*
     for(int i = 0; (int)i < result.size(); i++){
         *x = result[i];
         //cout << "This value is *x: " << *x << endl;
         ++x;
     }
-
-    */
-
-    vector<int> num1;
-    vector<int> num2;
-    vector<int> result;
+  
 
 
-    while(b1 != e1){
-        num1.push_back(*b1);
-        ++b1;
-    }
-
-    while(b2 != e2){
-        num2.push_back(*b2);
-        ++b2;
-    }
-
-    //here we have the num1 and num2
-    
-    
-    
     return x;}
 
 // --------------
