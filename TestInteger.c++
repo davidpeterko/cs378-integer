@@ -398,11 +398,47 @@ using namespace std;
 	}
 
 	TEST(IntegerFixture, negate4){
-		Integer<int> temp = 994682;
+		Integer<int> temp = 6;
 		Integer<int> neg = -temp;
 
-		ASSERT_EQ(-994682, neg);
+		ASSERT_EQ(-6, neg);
 	}
+
+	TEST(IntegerFixture, negate5){
+		Integer<int> temp = 4;
+		Integer<int> neg = -temp;
+
+		ASSERT_EQ(-4, neg);
+	}
+
+	TEST(IntegerFixture, negate6){
+		Integer<int> temp = -4;
+		Integer<int> neg = -temp;
+
+		ASSERT_EQ(4, neg);
+	}
+
+	TEST(IntegerFixture, negate7){
+		Integer<int> temp = 72;
+		Integer<int> neg = -temp;
+
+		ASSERT_EQ(-72, neg);
+	}
+
+	TEST(IntegerFixture, negate8){
+		Integer<int> temp = 994681;
+		Integer<int> neg = -temp;
+
+		ASSERT_EQ(-994681, neg);
+	}
+
+	TEST(IntegerFixture, negate9){
+		Integer<int> temp = -80;
+		Integer<int> neg = -temp;
+
+		ASSERT_EQ(80, neg);
+	}
+
 
 // -------------
 // pre-increment
@@ -851,7 +887,7 @@ using namespace std;
 	}
 
 
-/*
+
 // ---
 // pow
 // ---
@@ -882,5 +918,3 @@ using namespace std;
 		ASSERT_EQ(result, 27);
 	}	
 
-
-*/

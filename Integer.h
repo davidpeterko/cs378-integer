@@ -1307,8 +1307,16 @@ Example: -14 - (-6) = -14 + 6 = -8
 
             }
 
-
-
+            Integer tmp = 1;
+            while (e > 0){
+                if (e % 2 == 1){
+                    tmp *= *this;
+                    e -= 1; 
+                }else{
+                *this *= *this;
+                e /= 2;}
+            }
+            *this = tmp;
 
             return *this;}};
 

@@ -59,7 +59,7 @@ Integer.log:
 Doxyfile:
 	doxygen -g
 
-RunInteger: Integer.h RunInteger.c++
+RunInteger: RunInteger.c++
 	$(CXX) $(CXXFLAGS) RunInteger.c++ -o RunInteger
 
 RunInteger.out: RunInteger
