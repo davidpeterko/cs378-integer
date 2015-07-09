@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['integer',['Integer',['../class_integer.html',1,'Integer&lt; T, C &gt;'],['../class_integer.html#a1d5315e4ec5b56b8cb3a6991d514f7d6',1,'Integer::Integer(int value)'],['../class_integer.html#afebf72d47413ceedcc30b74c3055b771',1,'Integer::Integer(const std::string &amp;value)']]]
+  ['abs',['abs',['../class_integer.html#ac872a9e1c5a2e8e1457baf75e439f8da',1,'Integer::abs()'],['../class_integer.html#a28b38b99580e4787e353c6630c3cf063',1,'Integer::abs()']]]
 ];

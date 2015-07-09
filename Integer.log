@@ -1,0 +1,215 @@
+commit c5925a0d42a3a0c259c7c3812dc570bcb1bf1768
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Wed Jul 8 20:08:24 2015 -0500
+
+    Last pusht o travis ci
+
+commit 3327bf83a6b5ffa83a57509f1b23189ae880f97c
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Wed Jul 8 19:51:41 2015 -0500
+
+    addedmore tests.
+
+commit aad55af49062686780f48923ca5934beca5d9828
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Wed Jul 8 19:34:26 2015 -0500
+
+    Added pow
+
+commit 3357dd076bc23a01de54bc262d49f21a76a687ef
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Wed Jul 8 19:18:30 2015 -0500
+
+    successful build
+
+commit db8bfbd41875b1c02d5e2e1a84edc61209fcd89d
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Wed Jul 8 18:52:29 2015 -0500
+
+    still notw rking
+
+commit 6c31f0d4799c0424175632809fc9f24cf4b87935
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Wed Jul 8 17:48:03 2015 -0500
+
+    Added *=, /=, %=. Just need to imeplement multiplise and divide, to help write power.
+
+commit 3b10d3eaf19909da9800f6054595bca5cfea5ed3
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Wed Jul 8 16:34:59 2015 -0500
+
+    SHould be a succesfull build, but missing mutliplies and divide and power. Otherwise it should be successful, all unit tests included 100% coverage.
+
+commit 707e8ef2913d6fa70761d245c9783d5e23a53fab
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Tue Jul 7 21:46:59 2015 -0500
+
+    tried to finished.. but couldnt. too many errors.
+
+commit fb65c9dd0c6670170f40e2bbee93c7008820976f
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Tue Jul 7 20:54:06 2015 -0500
+
+    Added tests and fixed them, half teh tests are working, half arent. Need to implement multiply, divide, and teh equals, and power.
+
+commit 4e7565fcc3874ded5449ef27b7cb7f1fc44ecf6e
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Tue Jul 7 18:35:22 2015 -0500
+
+    half the our test cases are working.
+
+commit a443f4ffc15be6e248034d5871de706a5e3cef56
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Tue Jul 7 16:21:56 2015 -0500
+
+    minor
+
+commit b92810fa1bfc29baf3befd9851456b74b2fec3cf
+Author: Julmaldo <julio.a.maldo@gmail.com>
+Date:   Tue Jul 7 16:16:00 2015 -0500
+
+    fixed test
+
+commit 8e20af3c84cd5bb82cbf6557691410e0d560ae24
+Author: Julmaldo <julio.a.maldo@gmail.com>
+Date:   Tue Jul 7 15:44:20 2015 -0500
+
+    fixed <<= test
+
+commit aa56be4c3e8b2bfe9ff72e77f2a491bcbb09ce76
+Author: david ko <davidpeterko@gmail.com>
+Date:   Tue Jul 7 16:21:40 2015 -0500
+
+    Fixed make file TestInteger command, tried to fix some bugs in Integer.h
+
+commit b13b9ba3c4177412198f9b8c27204964868ebfdb
+Author: david ko <davidpeterko@gmail.com>
+Date:   Tue Jul 7 16:00:00 2015 -0500
+
+    Added the string constructor function.
+
+commit 310802fa9a7d80062bf3c9f35cbad8ff7898cac8
+Author: david ko <davidpeterko@gmail.com>
+Date:   Tue Jul 7 13:03:04 2015 -0500
+
+    Fixed tests in TestInteger.c++. make test now output to terminal and to output file, not sure about TestInteger.out; need to do on school linux machines. Need to implement pow, to get the output correct.
+
+commit 87f2619b47a10954a33c6f8dd3bc04fcbed3fe66
+Author: Julmaldo <julio.a.maldo@gmail.com>
+Date:   Tue Jul 7 11:12:30 2015 -0500
+
+    <<= test added
+
+commit a7d32b17827982563f06901d2900c6347b6c63f9
+Author: Julmaldo <julio.a.maldo@gmail.com>
+Date:   Tue Jul 7 11:05:43 2015 -0500
+
+    >>= test added
+
+commit 0b7b1e7586306ce792c4d68587b3bfa95cfac8ac
+Author: Julmaldo <julio.a.maldo@gmail.com>
+Date:   Tue Jul 7 10:59:13 2015 -0500
+
+    mod test added
+
+commit 3ac9ab77aa6f3abe46c5c7f1fbb8370e355fc8e5
+Author: david ko <davidpeterko@gmail.com>
+Date:   Tue Jul 7 10:53:53 2015 -0500
+
+    Added full notes and algorithm for string conversion.
+
+commit f21a0febc00de1121b1b7c8c08c2b93deb0ebb0f
+Author: david ko <davidpeterko@gmail.com>
+Date:   Tue Jul 7 10:47:50 2015 -0500
+
+    Make test works now
+
+commit bf00ec1e80be0395e2737f9424b0269d6ca63e8d
+Author: Julmaldo <julio.a.maldo@gmail.com>
+Date:   Mon Jul 6 21:48:51 2015 -0500
+
+    added minus_digits
+
+commit f265a82523d0389ac813a5f9486ace32478d5687
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Mon Jul 6 18:48:50 2015 -0500
+
+    Updated makefile, some things fixed but make test still not working.
+
+commit 2095206841fe2a419c62400a2a1ab71ac1b9cbd3
+Author: david peter ko <davidpeterko@gmail.com>
+Date:   Mon Jul 6 18:46:45 2015 -0500
+
+    Update Integer.h
+
+commit 99c26a69fd04df23f63cba2bfc2ac05d3d057ed2
+Author: Julmaldo <julio.a.maldo@gmail.com>
+Date:   Mon Jul 6 18:33:24 2015 -0500
+
+    fixed plus digits
+
+commit 9242da463f17a392fbf43479c4abcef4f0c28b97
+Author: Julmaldo <julio.a.maldo@gmail.com>
+Date:   Mon Jul 6 18:31:15 2015 -0500
+
+    fixed plus digits
+
+commit 49ea85dc07ce4e9ee16621ed779985c44a4135e1
+Author: Julmaldo <julio.a.maldo@gmail.com>
+Date:   Mon Jul 6 17:25:16 2015 -0500
+
+    added plus digits
+
+commit 84998cce773deff7c22bd90d8a51929883a49d00
+Author: david ko <davidpeterko@gmail.com>
+Date:   Mon Jul 6 15:36:08 2015 -0500
+
+    Added comments for later.
+
+commit 70ce2e29db24ec97a4f751a576a2dbd5e4108838
+Author: david ko <davidpeterko@gmail.com>
+Date:   Mon Jul 6 13:13:20 2015 -0500
+
+    Added more tests
+
+commit 78373484bc8e520fc0c86202f1802f7f39890f23
+Author: david ko <davidpeterko@gmail.com>
+Date:   Mon Jul 6 11:34:10 2015 -0500
+
+    Updated some functions, the return type on the pass by reference should be *this.
+
+commit 53e5d35728e7b55f9f19aa98c4f0a068afbd431e
+Author: david ko <davidpeterko@gmail.com>
+Date:   Sun Jul 5 11:30:53 2015 -0500
+
+    Fixed make file - make test works now. Fixde some syntax errors, will work on it tomorrow to finishf unctions.
+
+commit 54fe9e7f4fcac5bbac31624f7000e62006aee7b3
+Author: david ko <davidpeterko@gmail.com>
+Date:   Sun Jul 5 11:18:35 2015 -0500
+
+    Updated make file.
+
+commit 8127cc28b35dc7c292962f6924233c588c6e3773
+Author: david ko <davidpeterko@gmail.com>
+Date:   Sun Jul 5 10:58:31 2015 -0500
+
+    worked on a few functions, need to figure out the INteger algorithms at the bottom half.
+
+commit 44c9e3a166d3c60c022d85d0221de633d1a0db7f
+Author: david ko <davidpeterko@gmail.com>
+Date:   Sun Jul 5 09:52:52 2015 -0500
+
+    Fixed makefile to include Html, log and config and appropriate files.
+
+commit 7831bfa9d6ad0146ebf078c8d071c829fef267d9
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Fri Jul 3 18:04:30 2015 -0500
+
+    Filled out some code in integer.h: shift left, and shift right. filled out the public functions of the Integer container. Need to do the 'friend' functions. And correctly implement tests. Add bugs/features when ever you can.
+
+commit 7b80b4ea27fee97163215326e0e112d89e93c2da
+Author: David Ko <davidko@cs.utexas.edu>
+Date:   Fri Jul 3 16:14:45 2015 -0500
+
+    Added the starter files.
