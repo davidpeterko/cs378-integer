@@ -19,29 +19,6 @@
 
 using namespace std;
 
-/* our own function */
-template <typename II>
-void reverse_num (II b, II e) {
-    while ((b != e) && (b != --e)) {
-        std::swap(*b, *e);
-        ++b;
-    }
-}
-
- 
-template <typename II, typename OI>
-OI copy_reverse (II b, II e, OI x) {
-    int size = e - b;
-    assert(size >= 0);
-    while (b != e) {
-        --size;
-        *(x + size) = *b;
-        ++b;
-    }
-    return x;
-}
-
-
 // -----------------
 // shift_left_digits
 // -----------------
