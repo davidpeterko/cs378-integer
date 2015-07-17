@@ -25,7 +25,8 @@ CXXFLAGS := -pedantic -std=c++11 -Wall
 LDFLAGS  := -lgtest -lgtest_main -pthread
 VALGRIND := valgrind
 
-all: RunInteger TestInteger
+all: TestInteger
+	./TestInteger
 
 check:
 	@for i in $(FILES);                                         \
@@ -45,7 +46,7 @@ clean:
 config:
 	git config -l
 
-test: RunInteger
+test: RunInteger.out TestInteger.out
 
 integer-tests:
 	git clone https://github.com/cs378-summer-2015/integer-tests
@@ -71,6 +72,5 @@ TestInteger: Integer.h TestInteger.c++
 
 TestInteger.out: TestInteger
 	$(VALGRIND) ./TestInteger  >  TestInteger.out 2>&1
-	$(GCOV) -b Integer.h       >> TestInteger.out
 	$(GCOV) -b TestInteger.c++ >> TestInteger.out
 	cat TestInteger.out
