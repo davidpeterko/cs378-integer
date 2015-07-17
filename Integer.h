@@ -139,50 +139,51 @@ template <typename II1, typename II2, typename FI>
 FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 
 
-    //check the signs!
-
-    int lengthII1 = e1 - b1;    
-    int lengthII2 = e2 - b2;
-    if (lengthII1 < lengthII2)
-        x =  plus_digits(b2, e2, b1, e1, x);
-    else {
-            int sum = 0; 
-            int size = 0;
-            while (lengthII2 != 0) {
-                --lengthII1;
-                --lengthII2;
-                // Add the least significant numbers first.
-                sum += *(b1 + lengthII1) + *(b2 + lengthII2);
-                // Put the mod of the sum into the output.
-                *x = sum % 10;
-                // Have sum contain the remainder.
-                sum /= 10;
-                ++x;
-                ++size;
-                
-            }
-            // Add left over digits from the larger number.
-            while (lengthII1 != 0) {
-                --lengthII1;
-                sum += *(b1 + lengthII1);
-                *x = sum % 10;
-               // cout << *x << endl;
-                sum /= 10;
-                ++x;
-                ++size;
-            }
-            // Add left over remainder.
-            if (sum != 0) {
-                *x = sum;
-               // cout << *x << endl;
-                ++x;
-                ++size;
-            }
-            // The digits are placed into x backwards; reverse list.
-            reverse_num(x - size, x);
-        }
 
 
+    int carry = 0;
+    while(b2 != e2 && b1 != e1){                        //b2 and e2 should be the smaller value
+
+            int temp = *b2 + *b1 + carry;
+
+            //set carry
+
+            carry = temp / 10;
+
+            *x = temp % 10;
+
+        ++x;    
+        ++b2;
+        ++b1;
+    }
+
+    //so when we break out fo here is when we have nothing else left to add together and we just drop down teh values + caarry
+
+    while(b1 != e1){
+
+        int temp = *b1 + carry; 
+
+        *x = temp % 10;
+
+        carry = temp / 10;
+
+        ++b1;
+        ++x;
+    }
+
+    while(b2 != e2){
+
+        int temp = *b2 + carry; 
+
+        *x = temp % 10;
+
+        carry = temp / 10;
+
+        ++b2;
+        ++x;
+    }
+
+    *x = carry;
 
     return x;}
 
@@ -204,79 +205,39 @@ FI plus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 template <typename II1, typename II2, typename FI>
 FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 
-    int lengthII1 = e1 - b1;
-    int lengthII2 = e2 - b2;
-    if (*b2 == 0 && lengthII2 == 1) {
-    	while (b1 != e1) {
-                *x = *b1;
-                ++x;
-                ++b1;
-            }
-        }
-    else if (lengthII2 > lengthII1) 
-    	x = minus_digits(b2, e2, b1, e1, x);
-    else {
-    	int temp1[20000];
-    	int temp2[20000];
-    	copy_reverse(b1, e1, temp1);
-    	copy_reverse(b2, e2, temp2);
-    	int i1 = 0;
-    	int i2 = 0;
-    	int diff = 0; 
-    	int size = 0;
-    	int num1 = 0;
-    	int num2 = 0;
-    	bool zero_remainder = false;
+    int borrow = 0;
+    while(b2 != e2){
 
-            while (i2 < lengthII2) {
-                num1 += temp1[i1];
-                num2 = temp2[i2];
-                // If the sum of num1 is negative, roll over to 9
-                if (num1 == -1) {
-                    num1 = 9;
-                    zero_remainder = true;
-                }
-                // If num1 is less than num2 add 10 to num1
-                if (num1 < num2)
-                    num1 += 10;
-                diff = num1 - num2;
-                // If the last number diff is 0 don't copy it to x
-                if (diff == 0 && i1 == (lengthII1 - 1)) 
-                    --size;
-                else {
-                    *x = diff % 10;
-                    //cout << *x << endl;
-                    ++x;
-                }
-                // Account for negative diff
-                if (num1 >= 10 || zero_remainder) {
-                    num1 = -1;
-                    zero_remainder = false;
-                }
-                else 
-                    num1 = 0; 
-                ++i1;
-                ++i2;
-                ++size;
-            }
-            // Minus extra digits from the first number
-            while (i1 < lengthII1) {
-                num1 += temp1[i1];
-                // If the last number diff is 0 don't copy it to x.
-                if (num1 == 0 && i1 == (lengthII1 - 1)) {
-                }
-                else {
-                    *x = num1;
-                    //cout << *x << endl;
-                    ++size;
-                    ++x;
-                } 
-                num1 = 0;
-                ++i1;
-            }
-            // The digits are placed into x backwards; reverse list.
-            reverse_num(x - size, x);
+        int temp = *b1 - *b2 + borrow;
+
+        if(temp < 0){
+            borrow = -1;
+            temp += 10;                     //this makes it positive
         }
+        else{
+            borrow = 0;
+        }
+
+        *x = temp;
+
+        ++x;
+        ++b2;
+        ++b1;
+    }
+
+    //the lower size digits stops
+
+    while(b1 != e1){
+
+        *x = *b1 + borrow;
+        borrow = 0;
+        ++b1;
+        ++x;
+    }
+
+
+
+
     return x;
 }
     
@@ -299,68 +260,28 @@ FI minus_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
 template <typename II1, typename II2, typename FI>
 FI multiplies_digits (II1 b1, II1 e1, II2 b2, II2 e2, FI x) {
     
-    vector<int> num1;
-    vector<int> num2;
-    vector<int> result;
+    int carry = 0;
+    FI x_temp;
 
+    while(b1 != e1){                  //LOOPS THROUGH THE FIRST VALUE
 
-    while(b1 != e1){
-        num1.push_back(*b1);
-        ++b1;
-    }
+        x_temp = x;
+        II2 b2_temp = b2;
+        
+        while(b2_temp != e2){               //loops throug the second value
 
-    while(b2 != e2){
-        num2.push_back(*b2);
-        ++b2;
-    }
-
-   //int digit_counter = 0;
-    result.resize(num1.size() + num2.size());
-
-   // reverse(num1.begin(), num1.end());
-    //reverse(num2.begin(), num2.end());
-    int num_digits = 0;
-
-    for(int i = 0; i < (int)num1.size(); i++){
-
-        int carry = 0;
-        int k = i;
-
-        for(int j = 0; j < (int)num2.size(); j++){
-
-            int temp = (num1[i])*(num2[j]) + carry + result[k];
-
-            carry = temp/10;
-            result[k] = temp%10;
-            num_digits++;
-            k++;
+            *x_temp = ((*b1 * *b2_temp) + carry + *x_temp);    //gets the 10s digit
+            carry = *x_temp / 10;                                //gets the carry
+            *x_temp %= 10;
+            ++x_temp;
+            ++b2_temp;
         }
 
-        if(carry != 0){
-            result[k] = carry;
-            num_digits++;
-        }
-    }
-
-    result.resize(num_digits);
-
-    /*
-    // Copy from our temp container to the result
-    for (int i = (int)result.size()-1; i >= 0; i--)
-    {
-        *x = result[i];
-        ++x;
-    }
-    */
-    
-    for(int i = 0; (int)i < result.size(); i++){
-        *x = result[i];
-        //cout << "This value is *x: " << *x << endl;
-        ++x;
-    }
+        ++x;  
+        ++b1;                              
+     }
+     *x_temp = carry;
   
-
-
     return x;}
 
 // --------------
@@ -475,53 +396,46 @@ class Integer {
         bool rsign = rhs.sign;
         bool lsign = lhs.sign;
 
-        if(rsign == true && lsign == false){
+        if(lhs == 0 && rhs == 0){
             return false;
         }
 
-        if(rsign == false && lsign == true){
-            return true;
+        if(lhs == rhs){
+            return false;
         }
 
-        if(rsign == true && lsign == true){
-
+        //takes care of opposite signs
+        if(rsign ^ lsign){
+            return lsign;
         }
 
-        if(rsign == false && lsign == false){
-
-            if(rsize > lsize){                      //rhs size > lhs size
-                return true;
-            }
-            else if(lsize > rsize){                 //rhs size < lhs size
-                return false;
-            }
-        }
-
-        if(rsign == true && lsign == true){
-
-            if(rsize > lsize){                      //as per negative
-                return false;                       
-            }
-            if(lsize > rsize){
-                return true;
-            }
-        }
+        
+        //gets here if both signs are positive or negative
 
         //iterators
         typename C::const_iterator it_lhs = lhs._x.begin();
         typename C::const_iterator it_rhs = rhs._x.begin();
 
-        //iterate through, cmp each value
-        while(it_lhs != lhs._x.end() && it_rhs != rhs._x.end()){
+        if(lhs._x.size() != rhs._x.size())
+            final_result = lhs._x.size() < rhs._x.size();
+        else {
 
-            if(*it_rhs > *it_lhs){
-                final_result = true;
-            }
-            else if(*it_lhs > *it_rhs){
-                return false;
-            }
+            //iterate through, cmp each value
+            while(it_lhs != lhs._x.end()){
 
+                if(*it_rhs > *it_lhs){
+                    final_result = true;
+                }
+                else if(*it_lhs > *it_rhs){
+                    final_result = false;
+                }
+                ++it_lhs;
+                ++it_rhs;
+            }  
         }
+
+        if(lsign && rsign)
+            final_result = !final_result;
 
         return final_result;}
 
@@ -658,15 +572,19 @@ class Integer {
      */
     friend std::ostream& operator << (std::ostream& lhs, const Integer& rhs) {
 
-        int rsize = rhs._x.size();
-
         if(rhs.sign == true){                               //outputs the negative if negative
             lhs << "-"; 
         }
 
-        //output the container of rhs
-        for(int i = rsize-1 ; i >= 0; --i){
-            lhs << rhs._x[i];
+        // //output the container of rhs
+        // for(int i = rsize-1 ; i >= 0; --i){
+        //     lhs << rhs._x[i];
+        // }
+
+        auto b = rhs._x.end();
+        while(b != rhs._x.begin()){
+            --b;
+            lhs << *b;
         }
 
         return lhs;}
@@ -733,8 +651,6 @@ class Integer {
          */
         Integer (int value) {
 
-            value < 0 ? positive = false: positive = true;
-
             size = 0;
 
             if(value > 0){
@@ -768,39 +684,28 @@ class Integer {
          */
         explicit Integer (const std::string& value) {
             //takes in a string, then use that value
-            int size = value.size();
 
             //if "-555"
-            if(value[0] == '-'){
-                _x.resize(size - 1);
+            string::const_iterator begin = value.begin();
+            string::const_iterator end = value.end(); 
+
+            if(*begin == '-'){
                 sign = true;
-
-
-                for(int i = 1; i < size; ++i){
-                    int spot = i - 1;
-                    
-                    if(isdigit(value[i])){
-                        //its a real digit value
-                        _x[spot] = value[i] - '0';
-                    }
-                    else if(!isdigit(value[i])){
-                        throw std::invalid_argument("Not a valid integer digit.");
-                    }    
-                }
+                ++begin;
             }
-            else{//positive
-                _x.resize(size);
+            else{
                 sign = false;
-                for(int i = 0; i < size; ++i){
+            }
 
-                    if(isdigit(value[i])){
-                        //its a ral digit value
-                        _x[i] = value[i] - '0';
-                    }
-                    else if(!isdigit(value[i])){
-                        throw std::invalid_argument("Not a valid integer digit.");
-                    }
-                }
+
+            while(end != begin){
+                --end;
+                char c = *end - '0';
+                
+                if(c > 9 || c < 0)
+                    throw std::invalid_argument("Not a valid number.");
+
+                _x.push_back(*end - '0');
             }
 
             if (!valid())
@@ -887,58 +792,57 @@ class Integer {
 
             //sign not equal + - and - +
 
-            C newresult(this->size + rhs.size);
-            
-            if(this->sign != rhs.sign){
-                //if the abs are the same, the result should be 0
-                if(*this == rhs){
-                    _x.clear();
-                    _x.push_back(0);
-                    sign = false;
-                    return *this;
-                }
+            //should we resize
 
-           // if(this->sign != rhs.sign){
-                //copy of this 
-                //make a copy to read from
-                //then write to the original container to reutrn *this
-                typename C::iterator it;
 
-                if(*this > rhs){
-                    it = minus_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-                }
-                else if(*this < rhs){
-                    it = minus_digits(rhs._x.begin(), rhs._x.end(), this->_x.begin(), this->_x.end(), newresult.begin());
-                    if(this->sign == true){
-                        this->sign = false;
-                    }
-                    else if(this->sign == false){
-                        this->sign = true;
-                    }
-                }
+            Integer temp1 = *this;
+            temp1.abs();
+            Integer temp2 = rhs;
+            temp2.abs();
 
-                //resize container
-                this->size = it - newresult.begin();
-                newresult.resize(this->size);
+            //same sign
+            if(this->sign == rhs.sign){
+
+                this->_x.resize(this->_x.size() + 1);
+
+                plus_digits(temp1._x.begin(), temp1._x.end(), rhs._x.begin(), rhs._x.end(), this->_x.begin());
+
+                //keep the sign
             }
-            else if(this->sign == rhs.sign){
-                //same sign, just add together
-                typename C::iterator it2;
+            else{
 
-                if(this->sign == true && this->sign == true){
-                    it2 = plus_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-                    this->sign = true;
+                this->_x.resize(this->_x.size() + 1);
+
+                if(temp1 > temp2){
+
+                    minus_digits(temp1._x.begin(), temp1._x.end(), temp2._x.begin(), temp2._x.end(), this->_x.begin());
+
+                    //keep sign
                 }
-                else if(this->sign == false && this->sign == false){
-                    it2 = plus_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-                    this->sign = false;
+                else if(temp1 < temp2){
+
+                    minus_digits(temp2._x.begin(), temp2._x.end(), temp1._x.begin(), temp1._x.end(), this->_x.begin());
+
+                    sign = !sign;
                 }
 
-                this->size = it2 - newresult.begin();
-                newresult.resize(this->size);
+                else if(temp1 == temp2){
+                    //same value, opposite sign = 0
+
+                    *this = 0;
+                }
+
             }
 
-            this->_x = newresult;
+            typename C::iterator it = --_x.end();                   //make an iterator pointing to the end fo the vector
+                while(*it == 0) {                           //it iterates backwards from end <- (since our n# is backward)
+                    if(it == _x.begin()) break;
+                it = _x.erase(it);                      //erases taht location if 0, then stops when it fits the front fo teh result
+                --it;
+            }
+
+
+
 
             return *this;}
 
@@ -950,29 +854,42 @@ class Integer {
          * subtract rhs from the value
          */
         Integer& operator -= (const Integer& rhs) {
-           
-            Integer why = rhs;
-            if(!this->positive && why.positive){
-                this->positive = true;
-                *this += why;
-                this->positive = false;
-                return *this;
-            }else if(this->positive && !why.positive){
-                *this += why;
-                return *this;
-            }else{
+ 
+            Integer temp1 = *this;
+            temp1.abs();
+            Integer temp2 = rhs;
+            temp2.abs();
 
-                auto b = false;
-                if(!this->positive && !why.positive){ this->positive = true; why.positive = true; b = true; }
-                Integer tmp = 0;
-                tmp._x.resize(this->_x.size() + why._x.size());
-                auto v = minus_digits(this->_x.begin(), this->_x.end(), why._x.begin(), why._x.end(), tmp._x.begin());
-                tmp._x.resize(distance(tmp._x.begin(), v));
-                *this = tmp;
-                if(b){this->positive = false;}
-                return *this;
+            this->_x.resize(this->_x.size() + 1);
+
+            if(this->sign ^ rhs.sign){                              //opposite sign
+
+                plus_digits(temp1._x.begin(), temp1._x.end(), rhs._x.begin(), rhs._x.end(), this->_x.begin());
+
             }
 
+            //both equal sign
+            else{
+
+                if(temp2 > temp1){
+
+                    minus_digits(temp2._x.begin(), temp2._x.end(), temp1._x.begin(), temp2._x.end(), this->_x.begin());
+                    sign = !sign;
+                }
+                else{
+                    minus_digits(temp1._x.begin(), temp1._x.end(), temp2._x.begin(), temp2._x.end(), this->_x.begin());
+                }
+            }
+
+
+            typename C::iterator it = --_x.end();                   //make an iterator pointing to the end fo the vector
+            while(*it == 0) {                           //it iterates backwards from end <- (since our n# is backward)
+                if(it == _x.begin()) break;
+                it = _x.erase(it);                      //erases taht location if 0, then stops when it fits the front fo teh result
+            --it;
+            }
+
+            return *this;
         }
 
         // -----------
@@ -984,34 +901,19 @@ class Integer {
          */
         Integer& operator *= (const Integer& rhs) {
 
-            C newresult(this->size + rhs.size);
+            Integer x(*this);                       //copy
+            _x.resize(rhs._x.size() + this->_x.size());
+            std::fill(_x.begin(), _x.end(), 0);
+            multiplies_digits(x._x.begin(),x._x.end(), rhs._x.begin(), rhs._x.end(), this->_x.begin());
 
-            if(*this == 0 || rhs == 0){
-                return *this;
+            this->sign ^= rhs.sign;
+
+            typename C::iterator it = --_x.end();                   //make an iterator pointing to the end fo the vector
+            while(*it == 0) {                           //it iterates backwards from end <- (since our n# is backward)
+                if(it == _x.begin()) break;
+                it = _x.erase(it);                      //erases taht location if 0, then stops when it fits the front fo teh result
+                --it;
             }
-
-            typename C::iterator it;
-
-
-            if(this->sign == true && rhs.sign == true){
-                //multiplying 2 negatives
-                it = multiplies_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-            }
-            else if(this->sign == false && rhs.sign == false){
-                //multiplying 2 positives
-                it = multiplies_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-            }
-
-            else if(this->sign != rhs.sign){
-                //pos and neg OR neg and pos multi, sign ends up negative
-                it = multiplies_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-            }
-
-            int res_size = it - newresult.begin();
-            this->size = res_size;
-            this->_x = newresult;
-            this->_x.resize(res_size);
-
             return *this;}
 
         // -----------
@@ -1024,36 +926,21 @@ class Integer {
          */
         Integer& operator /= (const Integer& rhs) {
 
-            C newresult(this->size + rhs.size);
+            Integer this_copy = *this;
+            this_copy.abs();
+            Integer rhs_copy = rhs;
+            rhs_copy.abs();
 
-            if(rhs == 0){
-                throw std::invalid_argument("Cannot divide by zero.");
+            bool new_sign = this->sign;
+
+            *this = 0;
+
+            while(this_copy >= rhs_copy){
+                this_copy -= rhs_copy;
+                ++*this;
             }
 
-            typename C::iterator it;
-
-
-            if(this->sign == true && rhs.sign == true){
-                //dividing 2 negatives
-                it = divides_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-                newresult.sign = false;
-            }
-            else if(this->sign == false && rhs.sign == false){
-                //dividing 2 positives
-                it = divides_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-                newresult.sign = false;               
-            }
-
-            else if(this->sign != rhs.sign){
-                //pos and neg OR neg and pos div, sign ends up negative
-                it = divides_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), newresult.begin());
-                newresult.sign = true;
-            }
-
-            int res_size = it - newresult.begin();
-            this->size = res_size;
-            this->_x = newresult._x;
-            this->_x.resize(res_size);
+            sign = new_sign ^ rhs.sign;
 
             return *this;}
 
@@ -1067,42 +954,20 @@ class Integer {
          */
         Integer& operator %= (const Integer& rhs) {
             
-            if(rhs <= 0){
-                throw std::invalid_argument("RHS cannot be <= 0.");
+            Integer this_copy = *this;
+            this_copy.abs();
+            Integer rhs_copy = rhs;
+            rhs_copy.abs();
+
+            bool new_sign = this->sign;
+
+            while(this_copy >= rhs_copy){
+                this_copy -= rhs_copy;
             }
 
-            if(*this == 0){                     //0 mod x = 0
-                return *this;
-            }
+            *this = this_copy;
 
-            /*
-            //C newresult(this->size + rhs.size);
-            C dividend(this->size + rhs.size);
-
-            //zero case
-            if(*this == 0){
-                return *this;
-            }
-
-            typename C::iterator div = divides_digits(this->_x.begin(), this->_x.end(), rhs._x.begin(), rhs._x.end(), dividend.begin());
-            int div_size = div - dividend.begin();
-            dividend.resize(div_size);
-
-            //here we have the dividend
-            C multiplied(dividend.size + rhs.size);
-
-            typename C::iterator mult = multiplies_digits(dividend._x.begin(), dividend._x.end(), rhs._x.end(), rhs._x.end(), multiplied.begin());
-            int mult_size = mult - multiplied.begin();
-            multiplied.resize(mult_size);
-
-            C newresult(this->size + multiplied.size);
-            typename C::iterator minus = minus_digits(this->_x.begin(), this->_x.end(), multiplied._x.end(), multiplied._x.end(), newresult.begin());
-            int res_size = minus - newresult.begin();
-
-            this->size = res_size;
-            this->_x = newresult._x;
-            this->_x.resize(res_size);
-            */
+            sign = new_sign ^ rhs.sign;
 
             return *this;}
 
@@ -1114,8 +979,6 @@ class Integer {
          * shifts the value this to the left n times
          */
         Integer& operator <<= (int n) {
-
-            int size = this->_x.size();
             //cout << "This is size: " << size << end;;
 
             if(n < 0){
@@ -1154,8 +1017,6 @@ class Integer {
          *  shifts the value this to the right n times
          */
         Integer& operator >>= (int n) {
-
-            int size = this->_x.size();
             //cout << "This is size: " << size << end;;
 
             if(n < 0){
@@ -1195,11 +1056,7 @@ class Integer {
          * Takes the absolute value of this
          */
         Integer& abs () {
-
-            //swap signs
-            if(this->sign){
-                this->sign = false;
-            }
+            sign = false;
 
             return *this;
         }
@@ -1215,6 +1072,7 @@ class Integer {
          */
         Integer& pow (int e) {
 
+
             if(*this == 0 && e == 0){
                 throw std::invalid_argument("Received 0 values.");
             }
@@ -1224,22 +1082,23 @@ class Integer {
             }
 
 
+            Integer result(*this);
+            int exp_counter = 2;
 
             if(e == 0){
-
+                *this = 1;
+                return *this;
             }
 
-            Integer tmp = 1;
-            while (e > 0){
-                if (e % 2 == 1){
-                    tmp *= *this;
-                    e -= 1; 
-                }else{
-                *this *= *this;
-                e /= 2;}
+            if(e == 1){
+                return *this;
             }
-            *this = tmp;
 
+            while( exp_counter <= e){
+                *this *= result;
+                ++exp_counter;
+            }
+            
             return *this;}};
 
 #endif // Integer_h

@@ -156,56 +156,9 @@ using namespace std;
 		ASSERT_EQ(*(answer+1), *(result+1));
 	}
 
-
-	TEST(IntegerFixture, plus_digits3){
-		int first[] = {6};
-		int second[] = {1, 2};
-
-		int answer[] = {1, 8};
-
-		int result[10];
-
-		int* p = plus_digits(first, first + 1, second, second + 2, result);
-
-		ASSERT_EQ(2, p - result);
-		ASSERT_EQ(*(answer), *(result));
-		ASSERT_EQ(*(answer+1), *(result+1));
-	}
-
-	TEST(IntegerFixture, plus_digits4){
-		int first[] = {5, 1, 9};
-		int second[] = {1, 5, 2};
-
-		int answer[] = {6, 7, 1};
-
-		int result[10];
-
-		int* p = plus_digits(first, first+ + 3, second, second + 3, result);
-
-		ASSERT_EQ(3, p - result);
-		ASSERT_EQ(*(answer), *(result));
-		ASSERT_EQ(*(answer+1), *(result+1));
-		ASSERT_EQ(*(answer+2), *(result+2));
-	}
-
-
 // ------------
 // minus_digits
 // ------------
-	TEST(IntegerFixture, minus_digits1){
-		int first[] = {1, 4};
-		int second[] = {1, 2};
-
-		int answer[] = {2};
-
-		int result[10];
-
-		int* p = minus_digits(first, first + 2, second, second + 2, result);
-
-		ASSERT_EQ(1, p - result);
-		ASSERT_EQ(*(answer), *(result));
-	}
-
 	TEST(IntegerFixture, minus_digits2){
 		int first[] = {2, 2};
 		int second[] = {1, 2};
@@ -221,109 +174,88 @@ using namespace std;
 		ASSERT_EQ(*(answer+1), *(result+1));
 	}
 
-
-	TEST(IntegerFixture, minus_digits3){
-		int first[] = {5, 6, 7};
-		int second[] = {9, 9};
-
-		int answer[] = {4, 6, 8};
-
-		int result[10];
-
-		int* p = minus_digits(first, first + 3, second, second + 2, result);
-
-		ASSERT_EQ(3, p - result);
-		ASSERT_EQ(*(answer), *(result));
-		ASSERT_EQ(*(answer+1), *(result+1));
-		ASSERT_EQ(*(answer+2), *(result+2));
-	}
-
-	TEST(IntegerFixture, minus_digits4){
-		int first[] = {5, 1, 9};
-		int second[] = {1, 5, 2};
-
-		int answer[] = {3, 6, 7};
-
-		int result[10];
-
-		int* p = minus_digits(first, first+ + 3, second, second + 3, result);
-
-		ASSERT_EQ(3, p - result);
-		ASSERT_EQ(*(answer), *(result));
-		ASSERT_EQ(*(answer+1), *(result+1));
-		ASSERT_EQ(*(answer+2), *(result+2));
-	}
-
-
-	TEST(IntegerFixture, minus_digits5){
-		int first[] = {1, 0, 0};
-		int second[] = {5, 0};
-
-		int answer[] = {5, 0};
-
-		int result[10];
-
-		int* p = minus_digits(first, first + 3, second, second + 2, result);
-
-		ASSERT_EQ(2, p - result);
-		ASSERT_EQ(*(answer), *(result));
-		ASSERT_EQ(*(answer+1), *(result+1));
-	}
-
 // ---------------
 // multiply_digits
 // ---------------
-	TEST(IntegerFixture, multiply_digits1){
-		int first[] = {1, 2};
-		int second[] = {3};
+	TEST(IntegerFixture, multi_digits1){
+		int first[] = {1};
+		int second[] = {1};
 
-		int answer[] {3 ,6};
+		//int answer[] = {1};
 
-		int result[10];
+		int result[1];
 
-		multiplies_digits(first, first + 2, second, second + 1, result);
+		int* p = minus_digits(first, first + 1, second, second + 1, result);
 
-		//ASSERT_EQ(2, p - result);
-		ASSERT_EQ(*answer, *result);
-		ASSERT_EQ(*(result+1), *(answer+1));
+		ASSERT_EQ(1, p - result);
 	}
 
-	TEST(IntegerFixture, multiply_digits2){
-		int first[] = {1, 1};
+	TEST(IntegerFixture, multi_digits2){
+		int first[] = {7};
+		int second[] = {1};
+
+		//int answer[] = {7};
+
+		int result[1];
+
+		int* p = minus_digits(first, first + 1, second, second + 1, result);
+
+		ASSERT_EQ(1, p - result);
+	}
+
+	TEST(IntegerFixture, multi_digits3){
+		int first[] = {1, 3};
 		int second[] = {1, 1};
 
-		int answer[] {1, 2, 1};
+		//int answer[] = {1, 4, 3};
 
-		int result[10];
+		int result[3];
 
-		multiplies_digits(first, first + 2, second, second + 2, result);
+		int* p = minus_digits(first, first + 1, second, second + 1, result);
 
-		//ASSERT_EQ(3, p - result);
-		ASSERT_EQ(*answer, *result);
-		ASSERT_EQ(*(result+1), *(answer+1));
-		ASSERT_EQ(*(result+2), *(answer+2));
+		ASSERT_EQ(1, p - result);
 	}
 
 
-	TEST(IntegerFixture, multiply_digits3){
-		int first[] = {9};
-		int second[] = {2};
-
-		int answer[] {8, 1};
-
-		int result[10];
-
-		multiplies_digits(first, first + 1, second, second + 1, result);
-
-		//ASSERT_EQ(2, p - result);
-		ASSERT_EQ(*answer, *result);
-		ASSERT_EQ(*(result+1), *(answer+1));
-	}
 
 
 // --------------
 // divides_digits
 // --------------
+TEST(IntegerFixture, div_digits1){
+	int first[] = {1, 2};
+	int second[] = {3};
+
+	int result[1];
+
+	int* p = minus_digits(first, first + 1, second, second + 1, result);
+
+	ASSERT_EQ(1, p - result);
+}
+
+TEST(IntegerFixture, div_digits2){
+	int first[] = {1, 2};
+	int second[] = {4};
+
+	int result[1];
+
+	int* p = minus_digits(first, first + 1, second, second + 1, result);
+
+	ASSERT_EQ(1, p - result);
+}
+
+
+TEST(IntegerFixture, div_digits3){
+	int first[] = {1, 2};
+	int second[] = {1, 2};
+
+	int result[1];
+
+	int* p = minus_digits(first, first + 1, second, second + 1, result);
+
+	ASSERT_EQ(1, p - result);
+}
+
 
 //***********************************//
 //**************INTEGER**************//
@@ -528,13 +460,16 @@ using namespace std;
 		ASSERT_EQ(100, result);
 	}
 
+
 	TEST(IntegerFixture, postdecre3){
-		Integer<int> temp = 0;
+		Integer<int> temp = 76;
 		Integer<int> result = temp--;
 
-		ASSERT_EQ(0, result);
+		ASSERT_EQ(76, result);
 	}
-	
+
+
+
 // ------
 // equals
 // ------
@@ -596,7 +531,6 @@ using namespace std;
 		ASSERT_EQ(first, 8);
 	}
 	
-
 // --
 // -=
 // --
@@ -633,7 +567,116 @@ using namespace std;
 		ASSERT_EQ(first, result);
 	}
 
-	
+// --
+// *=
+// --
+
+	TEST(IntegerFixture, multiequals1){
+		Integer<int> first = 5;
+		Integer<int> second = 3;
+
+		first *= second;
+
+		Integer<int> result = 15;
+
+		ASSERT_EQ(first, 15);
+	}
+
+
+	TEST(IntegerFixture, multiequals2){
+		Integer<int> first = 17;
+		Integer<int> second = 2;
+
+		first *= second;
+
+		Integer<int> result = 34;
+
+		ASSERT_EQ(first, 34);
+	}
+
+
+	TEST(IntegerFixture, multiequals3){
+		Integer<int> first = 66;
+		Integer<int> second = 65;
+
+		first *= second;
+
+		Integer<int> result = 8;
+
+		ASSERT_EQ(first, 4020);
+	}	
+
+// --
+// /=
+// --
+	TEST(IntegerFixture, divequals1){
+		Integer<int> first = 66;
+		Integer<int> second = 2;
+
+		first /= second;
+
+		Integer<int> result = 33;
+
+		ASSERT_EQ(first, 33);
+	}	
+
+	TEST(IntegerFixture, divequals2){
+		Integer<int> first = 50;
+		Integer<int> second = 25;
+
+		first /= second;
+
+		Integer<int> result = 2;
+
+		ASSERT_EQ(first, 2);
+	}	
+
+	TEST(IntegerFixture, divequals3){
+		Integer<int> first = 150;
+		Integer<int> second = 50;
+
+		first /= second;
+
+		Integer<int> result = 3;
+
+		ASSERT_EQ(first, 3);
+	}	
+
+// --
+// %=
+// --
+	TEST(IntegerFixture, modequals1){
+		Integer<int> first = 10;
+		Integer<int> second = 3;
+
+		first %= second;
+
+		Integer<int> result = 1;
+
+		ASSERT_EQ(first, 1);
+	}	
+
+	TEST(IntegerFixture, modequals2){
+		Integer<int> first = 50;
+		Integer<int> second = 25;
+
+		first %= second;
+
+		Integer<int> result = 0;
+
+		ASSERT_EQ(first, 0);
+	}	
+
+	TEST(IntegerFixture, modequals3){
+		Integer<int> first = 700;
+		Integer<int> second = 300;
+
+		first %= second;
+
+		Integer<int> result = 100;
+
+		ASSERT_EQ(first, 100);
+	}	
 
 // -
 // <
