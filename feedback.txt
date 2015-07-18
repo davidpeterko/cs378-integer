@@ -6,8 +6,11 @@ Requirement #4: 20
 Requirement #5: 10
 Requirement #6: 5
 Bonus points:
-Minus (reasons in comments): -70
+Minus (reasons in comments): -8
 Comment:
-no divides_digit
-operator/= causes compile error when calling it
-failed *** 20th Mersenne prime: 1,332 digits ***
+partner +5
+compile error in previos version -14
+closing issues via commit -1
+20th Mersenne prime 0.307166 seconds
+30th Mersenne prime : 104.659 seconds +5
+no divides_digit -3
